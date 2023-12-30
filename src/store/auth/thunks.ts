@@ -21,7 +21,7 @@ export const startGoogleSignIn = () => {
 
 		if (!result.ok) return dispatch(onLogout(result.errorMessage));
 
-		dispatch(onLogin(result));
+		//dispatch(onLogin(result));
 	};
 };
 
@@ -40,9 +40,9 @@ export const startCreatingUserWithEmailPassword = ({
 		});
 		console.log("Result: " + result);
 
-		/* if(!ok ) return dispatch(logout({errorMessage}));
-
-        dispatch(login( { uid, displayName, email, photoURL } )); */
+		if(!result?.ok && result?.errorMessage) return dispatch(onLogout({errorMessage: result.errorMessage}));
+		
+        dispatch(onLogin({user: {...result}} )); 
 	};
 };
 
@@ -60,6 +60,6 @@ export const startLoginWithEmailPassword = ({
 			await loginWithEmailPassword({ email, password });
 
 		if (!ok) return dispatch(onLogout({ errorMessage }));
-		dispatch(onLogin({ uid, photoUrl: photoURL, displayName, errorMessage }));
+		dispatch(onLogin({user:{ uid, photoUrl: photoURL, displayName}, errorMessage }));
 	};
 };

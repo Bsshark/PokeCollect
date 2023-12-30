@@ -31,6 +31,7 @@ export interface AuthLoginResponse {
 	ok: boolean;
 	token: string;
 	uid: string;
+	photoUrl: string;
 }
 
 export interface AuthRegisterResponse {

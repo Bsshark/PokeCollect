@@ -18,7 +18,6 @@ import {
 	errMsgCredentialsLogin,
 	errMsgExpiredSession,
 } from "../helpers/errorMessages";
-import addNotification from "react-push-notification";
 import { toast } from "react-toastify";
 
 export const useAuthStore = () => {
@@ -40,7 +39,7 @@ export const useAuthStore = () => {
 			});
 			localStorage.setItem("token", data.token);
 			localStorage.setItem("token-init-date", new Date().getTime().toString());
-			dispatch(onLogin({ user: { displayName: data.name, uid: data.uid } }));
+			dispatch(onLogin({ user: { displayName: data.name, uid: data.uid, email: email, photoUrl: data.photoUrl } }));
 		} catch (error) {
 			dispatch(onLogout({ errorMessage: errMsgCredentialsLogin }));
 			setTimeout(() => {

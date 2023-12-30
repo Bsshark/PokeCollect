@@ -4,7 +4,7 @@ import {
 	checkingStatus,
 	notAuthenticatedStatus,
 } from "../../helpers";
-import { AuthErrorMessage, AuthState } from "../../interfaces/authInterfaces";
+import { AuthErrorMessage, AuthState } from '../../interfaces/authInterfaces';
 export const authSlice = createSlice({
 	name: "auth",
 	initialState: {

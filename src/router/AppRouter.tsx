@@ -14,7 +14,6 @@ export const AppRouter = () => {
 		checkAuthToken();
 	}, []);
 
-	console.log(status);
 
 	if (status === checkingStatus) {
 		return <LoadingComponent />;

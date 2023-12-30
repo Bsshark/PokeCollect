@@ -4,8 +4,12 @@ import { NavLink } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import PokedexLogo from "./../assets/pokedex.png";
 import PokeballNav from "./../assets/pokeball-nav.png";
+import { useAppSelector } from "../hooks";
+import { AuthState } from "../interfaces";
 
 export const Navbar = () => {
+	const { user }: AuthState = useAppSelector((state) => state.auth);
+
 	const [isNavCollapsed, setIsNavCollapsed] = useState(true);
 	const isMobile = useMediaQuery({ query: `(min-width: 576px)` });
 
@@ -35,20 +39,18 @@ export const Navbar = () => {
 				id="navbarSupportedContent"
 			>
 				<ul className="navbar-nav mr-auto nav-list-pokemon">
-					<li className="nav-item px-2 py-2">
+					<li className="nav-item py-2 mx-1">
 						<NavLink
 							to="pokedex"
 							style={{ textDecoration: "none" }}
-							className={({ isActive, isPending }) =>
-								isPending ? "pending" : isActive ? "active" : ""
-							}
+							className="px-2"
 						>
 							<img src={PokedexLogo} alt="Pokédex" style={{ height: "3em" }} />
 							<span>{isMobile ? "" : "Pokédex"}</span>
 						</NavLink>
 					</li>
-					<li className="nav-item px-2 py-2">
-						<NavLink to="collection" style={{ textDecoration: "none" }}>
+					<li className="nav-item py-2">
+						<NavLink to="collection" style={{ textDecoration: "none" }} className="px-2">
 							<img
 								src={PokeballNav}
 								alt="Colección"
@@ -65,13 +67,34 @@ export const Navbar = () => {
 							className={({ isActive, isPending }) =>
 								isPending ? "pending" : isActive ? "active" : ""
 							}
-							style={{ textDecoration: "none" }}
+							style={{ textDecoration: "none", width: '100%' }}
 						>
-							<i className="bi bi-person-circle" style={{ fontSize: "1.5em" }}>
-								<span style={{ paddingLeft: "0.3em" }}>
-									{isMobile ? "" : "Perfil"}
-								</span>
-							</i>
+							{user.photoUrl ? (
+								<i>
+									<img
+										src={user.photoUrl}
+										alt={`${user.displayName}`}
+										style={{
+											height: "3em",
+											width: "3em",
+											objectFit: "cover",
+											border: "1 px solid black",
+										}}
+									/>
+									<span style={{ paddingLeft: "0.3em" }}>
+										{isMobile ? "" : "Perfil"}
+									</span>
+								</i>
+							) : (
+								<i
+									className="bi bi-person-circle"
+									style={{ fontSize: "1.5em" }}
+								>
+									<span style={{ paddingLeft: "0.3em" }}>
+										{isMobile ? "" : "Perfil"}
+									</span>
+								</i>
+							)}
 						</NavLink>
 					</li>
 					<li className="nav-item px-2 py-2">
