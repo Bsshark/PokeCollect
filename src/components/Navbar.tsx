@@ -2,6 +2,8 @@ import { useState } from "react";
 import { LogoutBtn } from "./LogoutBtn";
 import { NavLink } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
+import PokedexLogo from "./../assets/pokedex.png";
+import PokeballNav from "./../assets/pokeball-nav.png";
 
 export const Navbar = () => {
 	const [isNavCollapsed, setIsNavCollapsed] = useState(true);
@@ -12,7 +14,9 @@ export const Navbar = () => {
 	return (
 		<nav className="navbar navbar-expand-sm">
 			<div className="navbar-brand">
-				<NavLink className={"h3"} style={{textDecoration: "none"}} to="/">PokéCollect</NavLink>
+				<NavLink className={"h3"} style={{ textDecoration: "none" }} to="/">
+					PokéCollect
+				</NavLink>
 			</div>
 			<button
 				className="navbar-toggler"
@@ -30,7 +34,30 @@ export const Navbar = () => {
 				className={`${isNavCollapsed ? "collapse" : ""} navbar-collapse`}
 				id="navbarSupportedContent"
 			>
-				<ul className="navbar-nav mr-auto"></ul>
+				<ul className="navbar-nav mr-auto nav-list-pokemon">
+					<li className="nav-item px-2 py-2">
+						<NavLink
+							to="pokedex"
+							style={{ textDecoration: "none" }}
+							className={({ isActive, isPending }) =>
+								isPending ? "pending" : isActive ? "active" : ""
+							}
+						>
+							<img src={PokedexLogo} alt="Pokédex" style={{ height: "3em" }} />
+							<span>{isMobile ? "" : "Pokédex"}</span>
+						</NavLink>
+					</li>
+					<li className="nav-item px-2 py-2">
+						<NavLink to="collection" style={{ textDecoration: "none" }}>
+							<img
+								src={PokeballNav}
+								alt="Colección"
+								style={{ height: "3em" }}
+							/>
+							<span>{isMobile ? "" : "Colección"}</span>
+						</NavLink>
+					</li>
+				</ul>
 				<ul className="navbar-nav ms-auto">
 					<li className="nav-item px-2 py-2">
 						<NavLink

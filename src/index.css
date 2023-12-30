@@ -36,3 +36,17 @@ body{
 .rnc__base{
 	width: auto !important;
 }
+
+/*-- Navbar --*/
+.nav-list-pokemon .nav-item:hover {
+	background-color: #724642;
+	border-radius: 5%;
+	cursor: pointer;
+}
+.nav-list-pokemon .nav-item a {
+	color: rgb(39, 39, 39);
+}
+
+.nav-list-pokemon .nav-item:has(> .active) {
+	background-color: #a66661;
+}
