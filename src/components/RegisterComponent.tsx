@@ -51,7 +51,7 @@ export const RegisterComponent = (props: WelcomePageProps) => {
 						<ErrorMessage
 							name="displayName"
 							component="div"
-							className="text-danger"
+							className="text-danger fw-bold fst-italic"
 						/>
 					</div>
 
@@ -68,7 +68,7 @@ export const RegisterComponent = (props: WelcomePageProps) => {
 						<ErrorMessage
 							name="email"
 							component="div"
-							className="text-danger"
+							className="text-danger fw-bold fst-italic"
 						/>
 					</div>
 
@@ -85,7 +85,7 @@ export const RegisterComponent = (props: WelcomePageProps) => {
 						<ErrorMessage
 							name="password"
 							component="div"
-							className="text-danger"
+							className="text-danger fw-bold fst-italic"
 						/>
 					</div>
 
@@ -102,7 +102,7 @@ export const RegisterComponent = (props: WelcomePageProps) => {
 						<ErrorMessage
 							name="passwordConfirm"
 							component="div"
-							className="text-danger"
+							className="text-danger fw-bold fst-italic"
 						/>
 					</div>
 

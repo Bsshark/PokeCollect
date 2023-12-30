@@ -18,7 +18,12 @@ export const LoginComponent = (props: WelcomePageProps) => {
 
 	useEffect(() => {
 		if (errorMessage === errMsgCredentialsLogin) {
-			Swal.fire({title: "Error en la autenticación", text: errMsgCredentialsLogin!, icon: "error", heightAuto: false} );
+			Swal.fire({
+				title: "Error en la autenticación",
+				text: errMsgCredentialsLogin!,
+				icon: "error",
+				heightAuto: false,
+			});
 		}
 	}, [errorMessage]);
 
@@ -44,7 +49,7 @@ export const LoginComponent = (props: WelcomePageProps) => {
 						<ErrorMessage
 							name="email"
 							component="div"
-							className="text-danger"
+							className="text-danger fw-bold"
 						/>
 					</div>
 
@@ -61,7 +66,7 @@ export const LoginComponent = (props: WelcomePageProps) => {
 						<ErrorMessage
 							name="password"
 							component="div"
-							className="text-danger"
+							className="text-danger fw-bold"
 						/>
 					</div>
 
