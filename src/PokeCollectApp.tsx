@@ -10,7 +10,6 @@ export const PokeCollectApp = () => {
 				<Route path="/profile" element={<ProfilePage />}></Route>
 				<Route path="/pokedex" element={<PokedexPage />}></Route>
 			</Routes>
-			Poke collect app
 		</>
 	);
 };
