@@ -17,7 +17,7 @@ export const loginValidationSchema: Yup.Schema<LoginUser> = Yup.object().shape({
 
 export const registerValidationSchema: Yup.Schema<RegisterUser> =
 	Yup.object().shape({
-		name: Yup.string().required(nameMissingMsg),
+		displayName: Yup.string().required(nameMissingMsg),
 		email: Yup.string().email(emailErrorMsg).required(emailMissingMsg),
 		password: Yup.string()
 			.required(passwordMissingMsg)

@@ -1,0 +1,38 @@
+html,
+body,
+#root,
+#root > div {
+	background-color: #f9dfdd;
+}
+
+body{
+	height: 100vh;
+}
+
+#root .container {
+	height: 100vh;
+}
+
+#root .form-container {
+	background-color: #F8AD9D;
+}
+
+.form-container  div {
+	color: #1b1b1b;
+}
+.form-container a {
+	color: #133d5a;
+}
+.navbar {
+	background-color: #F4978E;
+}
+.navbar i {
+	color: rgb(39, 39, 39);
+}
+.navbar-brand {
+	text-decoration: dashed;
+}
+
+.rnc__base{
+	width: auto !important;
+}

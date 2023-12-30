@@ -1,41 +1,116 @@
 import { useAppDispatch, useAppSelector } from "./dispatch";
-import { AuthLoginResponse, LoginUser } from "../interfaces/authInterfaces";
-import { checkingCredentials, clearErrorMessage, login, logout } from "../store/auth/authSlice";
+import {
+	AuthLoginResponse,
+	AuthRegisterResponse,
+	LoginUser,
+	RegisterUser,
+} from "../interfaces/authInterfaces";
+import {
+	onCheckingCredentials,
+	clearErrorMessage,
+	onLogin,
+	onLogout,
+} from "../store/auth/authSlice";
 import authApi from "../api/authApi";
-import { useDispatch } from "react-redux";
+import { startCreatingUserWithEmailPassword } from "../store/auth/thunks";
+import {
+	errMsgCreateUser,
+	errMsgCredentialsLogin,
+	errMsgExpiredSession,
+} from "../helpers/errorMessages";
+import addNotification from "react-push-notification";
+import { toast } from "react-toastify";
 
 export const useAuthStore = () => {
+	const dispatch = useAppDispatch();
 
-    const dispatch = useDispatch();
+	const { status, user, errorMessage } = useAppSelector((state) => state.auth);
 
-	const { status, email, displayName, photoUrl, errorMessage } = useAppSelector(
-		(state) => state.auth
-	);
+	const delay = (ms: any) => new Promise((res) => setTimeout(res, ms));
 
 	const startLogin = async ({ email, password }: LoginUser) => {
-		dispatch(checkingCredentials());
+		dispatch(onCheckingCredentials());
+
+		await delay(500);
 
 		try {
-			const { data } = await authApi.post<AuthLoginResponse>("/auth", { email, password });
+			const { data } = await authApi.post<AuthLoginResponse>("/auth", {
+				email,
+				password,
+			});
 			localStorage.setItem("token", data.token);
-            localStorage.setItem("token-init-date", new Date().getTime().toString());
-            dispatch(login({displayName: data.name, uid: data.uid}));
+			localStorage.setItem("token-init-date", new Date().getTime().toString());
+			dispatch(onLogin({ user: { displayName: data.name, uid: data.uid } }));
 		} catch (error) {
-            dispatch(logout({errorMessage: "Credenciales incorrectas"}));
-            setTimeout(() => {
-                dispatch(clearErrorMessage());
-            }, 10);
-        }
+			dispatch(onLogout({ errorMessage: errMsgCredentialsLogin }));
+			setTimeout(() => {
+				dispatch(clearErrorMessage());
+			}, 10);
+		}
+	};
+
+	const startRegister = async ({
+		displayName,
+		email,
+		password,
+	}: RegisterUser) => {
+		dispatch(onCheckingCredentials());
+		try {
+			const { data } = await authApi.post<AuthRegisterResponse>("auth/new", {
+				name: displayName,
+				email,
+				password,
+			});
+			localStorage.setItem("token", data.token);
+			localStorage.setItem("token-init-date", new Date().getTime().toString());
+			dispatch(
+				startCreatingUserWithEmailPassword({ displayName, email, password })
+			);
+			dispatch(onLogin({ user: { displayName: data.name, uid: data.uid } }));
+			toast.success("Cuenta creada con éxito", {
+				theme: "dark"
+			});
+		} catch (error) {
+			dispatch(onLogout({ errorMessage: errMsgCreateUser }));
+			setTimeout(() => {
+				dispatch(clearErrorMessage());
+			}, 10);
+		}
+	};
+
+	const checkAuthToken = async () => {
+		const token = localStorage.getItem("token");
+		if (!token)
+			return dispatch(onLogout({ errorMessage: errMsgExpiredSession }));
+
+		try {
+			const { data } = await authApi.get("auth/renew");
+			localStorage.setItem("token", data.token);
+			localStorage.setItem("token", data.token);
+			localStorage.setItem("token-init-date", new Date().getTime().toString());
+			dispatch(onLogin({ user: { displayName: data.name, uid: data.uid } }));
+		} catch (error) {
+			localStorage.clear();
+			dispatch(onLogout({ errorMessage: errMsgExpiredSession }));
+		}
+	};
+
+	const startLogout = async () => {
+		localStorage.clear();
+		dispatch(onCheckingCredentials());
+		await delay(500);
+		dispatch(onLogout({ errorMessage: "" }));
 	};
 
 	return {
 		status,
-		email,
-		displayName,
-		photoUrl,
+		user,
 		errorMessage,
 
-        //Metodos
-        startLogin,
+		//Metodos
+		startLogin,
+		startRegister,
+		checkAuthToken,
+		startLogout,
 	};
 };

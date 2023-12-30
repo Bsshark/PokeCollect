@@ -1,17 +1,65 @@
-import { Action, Dispatch } from "redux"
-import { checkingCredentials, login, logout } from "./authSlice";
-import { loginWithEmailPassword } from "../../firebase/providers";
+import { Action, Dispatch } from "redux";
+import { onCheckingCredentials, onLogin, onLogout } from "./authSlice";
+import {
+	loginWithEmailPassword,
+	registerUserWithEmailPassword,
+	singInWithGoogle,
+} from "../../firebase/providers";
+import { useAppDispatch } from "../../hooks/dispatch";
+import { RegisterUser } from "../../interfaces/authInterfaces";
 
-export const startLoginWithEmailPassword = ({email, password}: {email: string, password: string}) => {
-    return async(dispatch: Dispatch<Action>) => {
-        dispatch(checkingCredentials());
+export const checkingAuthentication = () => {
+	return async (dispatch: Dispatch<any> = useAppDispatch()) => {
+		dispatch(onCheckingCredentials());
+	};
+};
 
+export const startGoogleSignIn = () => {
+	return async (dispatch: Dispatch<any> = useAppDispatch()) => {
+		dispatch(onCheckingCredentials());
+		const result = await singInWithGoogle();
 
-        const result = await loginWithEmailPassword({email, password});
+		if (!result.ok) return dispatch(onLogout(result.errorMessage));
 
-        if(!result.ok) return dispatch(logout(result.errorMessage));
+		dispatch(onLogin(result));
+	};
+};
 
-        console.log(result);
+export const startCreatingUserWithEmailPassword = ({
+	email,
+	password,
+	displayName,
+}: RegisterUser) => {
+	return async (dispatch: Dispatch<any> = useAppDispatch()) => {
+		dispatch(onCheckingCredentials());
 
-    }
-}
+		const result = await registerUserWithEmailPassword({
+			email,
+			password,
+			displayName,
+		});
+		console.log("Result: " + result);
+
+		/* if(!ok ) return dispatch(logout({errorMessage}));
+
+        dispatch(login( { uid, displayName, email, photoURL } )); */
+	};
+};
+
+export const startLoginWithEmailPassword = ({
+	email,
+	password,
+}: {
+	email: string;
+	password: string;
+}) => {
+	return async (dispatch: Dispatch<Action>) => {
+		dispatch(onCheckingCredentials());
+
+		const { ok, uid, photoURL, displayName, errorMessage } =
+			await loginWithEmailPassword({ email, password });
+
+		if (!ok) return dispatch(onLogout({ errorMessage }));
+		dispatch(onLogin({ uid, photoUrl: photoURL, displayName, errorMessage }));
+	};
+};

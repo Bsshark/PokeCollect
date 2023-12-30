@@ -34,7 +34,7 @@ export const singInWithGoogle = async() => {
 }
 
 
-export const registerUserWithEmailPassword = async({ email, password, name: displayName }: RegisterUser) => {
+export const registerUserWithEmailPassword = async({ email, password, displayName }: RegisterUser) => {
 
     try {
         const resp = await createUserWithEmailAndPassword( FirebaseAuth, email, password );
