@@ -9,8 +9,8 @@ body{
 	height: 100vh;
 }
 
-#root .container {
-	height: 100vh;
+#root > .container {
+	height: 100%;
 }
 
 #root .form-container {

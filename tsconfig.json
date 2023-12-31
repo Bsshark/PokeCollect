@@ -22,7 +22,4 @@
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }],
-  "files": [
-    "src/declaration.d.ts"
-  ]
 }

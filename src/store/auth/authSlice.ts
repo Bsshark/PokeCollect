@@ -4,7 +4,7 @@ import {
 	checkingStatus,
 	notAuthenticatedStatus,
 } from "../../helpers";
-import { AuthErrorMessage, AuthState } from '../../interfaces/authInterfaces';
+import { AuthErrorMessage, AuthState } from "../../interfaces/authInterfaces";
 export const authSlice = createSlice({
 	name: "auth",
 	initialState: {
@@ -17,13 +17,23 @@ export const authSlice = createSlice({
 			state.status = checkingStatus;
 		},
 		onLogin: (state: AuthState, { payload }: PayloadAction<AuthState>) => {
+			console.log('on login')
 			state.status = authenticatedStatus;
 			state.user.uid = payload.user.uid;
 			state.user.email = payload.user.email;
 			state.user.displayName = payload.user.displayName;
 			state.user.photoUrl = payload.user.photoUrl;
 			state.errorMessage = null;
-		},
+		}/* ,
+		onLoginChecked: (
+			state: AuthState,
+			{ payload }: PayloadAction<AuthState>
+		) => {
+			state.status = authenticatedStatus;
+			state.user.displayName = payload.user.displayName;
+			state.user.uid = payload.user.uid;
+			state.errorMessage = null;
+		} */,
 		onLogout: (state: AuthState, action: PayloadAction<AuthErrorMessage>) => {
 			state.status = notAuthenticatedStatus;
 			state.user.uid = null;
@@ -37,5 +47,10 @@ export const authSlice = createSlice({
 		},
 	},
 });
-export const { onCheckingCredentials, onLogin, onLogout, clearErrorMessage } =
-	authSlice.actions;
+export const {
+	onCheckingCredentials,
+	onLogin,
+	onLogout,
+	clearErrorMessage,
+	
+} = authSlice.actions;

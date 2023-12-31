@@ -2,6 +2,7 @@ import { useAppDispatch, useAppSelector } from "./dispatch";
 import {
 	AuthLoginResponse,
 	AuthRegisterResponse,
+	AuthState,
 	LoginUser,
 	RegisterUser,
 } from "../interfaces/authInterfaces";
@@ -23,7 +24,9 @@ import { toast } from "react-toastify";
 export const useAuthStore = () => {
 	const dispatch = useAppDispatch();
 
-	const { status, user, errorMessage } = useAppSelector((state) => state.auth);
+	const { status, user, errorMessage }: AuthState = useAppSelector(
+		(state) => state.auth
+	);
 
 	const delay = (ms: any) => new Promise((res) => setTimeout(res, ms));
 
@@ -39,7 +42,18 @@ export const useAuthStore = () => {
 			});
 			localStorage.setItem("token", data.token);
 			localStorage.setItem("token-init-date", new Date().getTime().toString());
-			dispatch(onLogin({ user: { displayName: data.name, uid: data.uid, email: email, photoUrl: data.photoUrl } }));
+			dispatch(
+				onLogin({
+					user: {
+						displayName: data.name,
+						uid: data.uid,
+						email: email,
+						photoUrl: data.photoUrl,
+					},
+				})
+			);
+			localStorage.setItem("user-email", email);
+			localStorage.setItem("user-photo-url", data.photoUrl);
 		} catch (error) {
 			dispatch(onLogout({ errorMessage: errMsgCredentialsLogin }));
 			setTimeout(() => {
@@ -67,7 +81,7 @@ export const useAuthStore = () => {
 			);
 			dispatch(onLogin({ user: { displayName: data.name, uid: data.uid } }));
 			toast.success("Cuenta creada con éxito", {
-				theme: "dark"
+				theme: "dark",
 			});
 		} catch (error) {
 			dispatch(onLogout({ errorMessage: errMsgCreateUser }));
@@ -83,11 +97,23 @@ export const useAuthStore = () => {
 			return dispatch(onLogout({ errorMessage: errMsgExpiredSession }));
 
 		try {
+			console.log(user.email);
 			const { data } = await authApi.get("auth/renew");
 			localStorage.setItem("token", data.token);
 			localStorage.setItem("token", data.token);
 			localStorage.setItem("token-init-date", new Date().getTime().toString());
-			dispatch(onLogin({ user: { displayName: data.name, uid: data.uid } }));
+			data.email = localStorage.getItem("user-email");
+			data.photoUrl = localStorage.getItem("user-photo-url");
+			dispatch(
+				onLogin({
+					user: {
+						displayName: data.name,
+						uid: data.uid,
+						email: data.email,
+						photoUrl: data.photoUrl,
+					},
+				})
+			);
 		} catch (error) {
 			localStorage.clear();
 			dispatch(onLogout({ errorMessage: errMsgExpiredSession }));

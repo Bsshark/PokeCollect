@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+/* import { useEffect } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 
 import { FirebaseAuth } from '../firebase/config';
@@ -18,9 +18,9 @@ export const useCheckAuth = () => {
             if ( !user ) return dispatch( onLogout({errorMessage: 'Error de login'}) );
 
             const { uid, email, displayName, photoURL } = user;
-            dispatch( onLogin({user:{ uid, email, displayName, photoUrl :photoURL }, status}) );
+            dispatch( onLogin({user:{ uid, displayName, email , photoUrl :photoURL }, status}) );
         })
     }, []);
 
     return status;
-}
+} */
