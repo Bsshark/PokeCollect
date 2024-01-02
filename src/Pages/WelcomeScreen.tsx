@@ -21,7 +21,7 @@ export const WelcomeScreen = () => {
 	}, [showLogin]);
 
 	return (
-		<div className="container pt-5 d-flex align-items-center justify-content-center">
+		<div className="container d-flex align-items-center justify-content-center">
 			<animated.div
 				className={`row justify-content-center w-50 form-container rounded`}
 				style={{ ...springs }}

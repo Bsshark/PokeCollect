@@ -1,6 +1,5 @@
 import { useAppSelector } from "../hooks";
 import { AuthUser } from "../interfaces";
-import { authSlice } from "../store/auth/authSlice";
 
 export const ProfilePage = () => {
 	const { user } = useAppSelector((state) => state.auth);
@@ -10,7 +9,7 @@ export const ProfilePage = () => {
 	return (
 		<>
 			<div
-				className="container justify-content-center border border-secondary mt-4 d-flex flex-column"
+				className="container border border-secondary my-2 d-flex flex-column profileComponent"
 				style={{ width: "70%"}}
 			>
 				<div className="p-2">{

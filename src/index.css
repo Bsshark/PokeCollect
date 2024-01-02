@@ -9,9 +9,10 @@ body{
 	height: 100vh;
 }
 
-#root > .container {
-	height: 100%;
+#root {
+	height: 100vh;
 }
+
 
 #root .form-container {
 	background-color: #F8AD9D;
@@ -49,4 +50,10 @@ body{
 
 .nav-list-pokemon .nav-item:has(> .active) {
 	background-color: #a66661;
+}
+
+/*-- Profile Page --*/
+.profileComponent {
+	height: 40em;
+	width: 70%;
 }
