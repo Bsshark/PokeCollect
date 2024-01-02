@@ -13,7 +13,7 @@ export const authSlice = createSlice({
 		errorMessage: null,
 	},
 	reducers: {
-		onCheckingCredentials: (state) => {
+		onCheckingCredentials: (state: AuthState) => {
 			state.status = checkingStatus;
 		},
 		onLogin: (state: AuthState, { payload }: PayloadAction<AuthState>) => {

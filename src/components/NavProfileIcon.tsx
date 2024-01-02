@@ -11,8 +11,9 @@ export const NavProfileIcon = (props: NavProfileIconProps): JSX.Element => {
 					height: "3em",
 					width: "3em",
 					objectFit: "cover",
-					border: "1px solid black",
+					boxShadow: "0px 0px 10px black"
 				}}
+				className="rounded-circle"
 			/>
 			<span style={{ paddingLeft: "0.3em" }}>{isMobile ? "" : "Perfil"}</span>
 		</i>

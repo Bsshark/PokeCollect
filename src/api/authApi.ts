@@ -1,5 +1,5 @@
 import { getEnvironments } from "./../helpers/getEnvironments";
-import axios, { AxiosRequestConfig } from "axios";
+import axios from "axios";
 
 const { VITE_API_URL } = getEnvironments();
 
