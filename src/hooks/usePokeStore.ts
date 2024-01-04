@@ -7,34 +7,43 @@ import pokeApi from "../api/pokeApi";
 export const usePokeStore = () => {
 	const dispatch = useAppDispatch();
 
-	const nTypes = 18;
+	const nTypes = 18; //Pokemon types quantity
 
 	const {
 		isLoading,
 		pokeSelected,
 		pokemonShown,
-		nPagination = 9,
+		nPagination = 12,
 		nStart = 0,
 		types
 	}: PokeState = useAppSelector((state) => state.poke);
 
-	const startLoadingPokes = async () => {
+	const startLoadingPokes = async (query?: string) => {
 		dispatch(startLoading());
 		(async () => {
 			const api = new PokemonClient();
 
 			try {
-				const pokemonData = await api.listPokemons(nStart, nPagination);
 				var pokemonToShow: Pokemon[] = [];
-				const promises = pokemonData.results.map((res) => pokeApi.get(res.url));
-
-				Promise.all(promises).then((results) => {
-					pokemonToShow = [];
-					results.map((result) => {
-						pokemonToShow.push(result.data);
-					});
+				if(query) {
+					const pokemonData = await api.getPokemonByName(query);
+					pokemonToShow.push(pokemonData);
 					dispatch(onLoadPokemon(pokemonToShow));
-				});
+				} else {
+					const pokemonData = await api.listPokemons(nStart, nPagination);
+
+					const promises = pokemonData.results.map((res) => pokeApi.get(res.url));
+					Promise.all(promises).then((results) => {
+						pokemonToShow = [];
+						results.map((result) => {
+							pokemonToShow.push(result.data);
+						});
+						dispatch(onLoadPokemon(pokemonToShow));
+					});
+				}
+				
+
+				
 			} catch (error) {
 				console.error(error);
 			}
@@ -61,6 +70,19 @@ export const usePokeStore = () => {
 		}
 	}
 
+	const startSearchingPokemonByName = async (pokemonName: string) => {
+		dispatch(startLoading());
+		try {
+			const results = await pokeApi.get(`pokemon/${pokemonName}`);
+
+
+
+			dispatch(onLoadTypes(results.data))
+		} catch (error) {
+			console.log(error);
+		}
+	}
+
 	return {
 		pokemonShown,
 		pokeSelected,
@@ -68,6 +90,7 @@ export const usePokeStore = () => {
 		types,
 		//Metodos
 		startLoadingPokes,
-		startLoadingTypes
+		startLoadingTypes,
+		startSearchingPokemonByName
 	};
 };

@@ -17,7 +17,6 @@ export const authSlice = createSlice({
 			state.status = checkingStatus;
 		},
 		onLogin: (state: AuthState, { payload }: PayloadAction<AuthState>) => {
-			console.log('on login')
 			state.status = authenticatedStatus;
 			state.user.uid = payload.user.uid;
 			state.user.email = payload.user.email;

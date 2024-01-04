@@ -5,7 +5,7 @@ body,
 	background-color: #f9dfdd;
 }
 
-body{
+body {
 	height: 100vh;
 }
 
@@ -13,19 +13,18 @@ body{
 	height: 100vh;
 }
 
-
 #root .form-container {
-	background-color: #F8AD9D;
+	background-color: #f8ad9d;
 }
 
-.form-container  div {
+.form-container div {
 	color: #1b1b1b;
 }
 .form-container a {
 	color: #133d5a;
 }
 .navbar {
-	background-color: #F4978E;
+	background-color: #f4978e;
 }
 .navbar i {
 	color: rgb(39, 39, 39);
@@ -34,22 +33,38 @@ body{
 	text-decoration: dashed;
 }
 
-.rnc__base{
+.rnc__base {
 	width: auto !important;
 }
 
 /*-- Navbar --*/
 .nav-list-pokemon .nav-item:hover {
 	background-color: #724642;
-	border-radius: 5%;
 	cursor: pointer;
 }
+
+.profile-item-mobile:hover {
+	background-color: #724642;
+	cursor: pointer;
+}
+
 .nav-list-pokemon .nav-item a {
 	color: rgb(39, 39, 39);
 }
 
 .nav-list-pokemon .nav-item:has(> .active) {
 	background-color: #a66661;
+}
+
+.navbar-toggler:focus {
+	border: 0 !important;
+	box-shadow: none !important;
+}
+.navbar-toggler {
+	border: 0 !important;
+}
+.navItemLink {
+	display: block;
 }
 
 /*-- Profile Page --*/
@@ -59,6 +74,7 @@ body{
 }
 
 /* -- Pokedex Cards -- */
-.pokemonCard{
+.pokemonCard {
 	border: 1px solid black;
+	background-color: #f9c9c5;
 }

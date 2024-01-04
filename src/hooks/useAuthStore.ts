@@ -97,7 +97,6 @@ export const useAuthStore = () => {
 			return dispatch(onLogout({ errorMessage: errMsgExpiredSession }));
 
 		try {
-			console.log(user.email);
 			const { data } = await authApi.get("auth/renew");
 			localStorage.setItem("token", data.token);
 			localStorage.setItem("token", data.token);

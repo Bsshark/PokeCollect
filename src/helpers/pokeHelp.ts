@@ -1,9 +1,7 @@
-import { PokemonType } from "pokenode-ts";
 import { RootTypes, Name } from "../interfaces/pokemonInterfaces";
 export const findTypeInLanguage = (
 	language: string,
-	types: RootTypes[],
-	pokeTypes: PokemonType[]
+	types: RootTypes[]
 ) => {
 	const langTypes: Name[] = [];
 	types.forEach((rootType) => {

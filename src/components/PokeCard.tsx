@@ -2,24 +2,18 @@ import { findTypeInLanguage } from "../helpers/pokeHelp";
 import { usePokeStore } from "../hooks/usePokeStore";
 import { PokemonCardInfo } from "../interfaces";
 
+import "./PokeCard.scss";
+
 export const PokeCard = (props: PokemonCardInfo) => {
 	const { types: allTypes } = usePokeStore();
 
 	const { name, sprite, types } = props;
 	const pokeDisplayName = name!.charAt(0).toUpperCase() + name?.slice(1);
 
-	const typesTranslated = findTypeInLanguage(
-		"es",
-		allTypes,
-		types ? types : []
-	);
+	const typesTranslated = findTypeInLanguage("es", allTypes);
 	let typesTranslatedPokemon: number[] = [];
 
 	if (types) {
-		/* console.log(typesTranslated);
-		console.log(allTypes);
-		console.log(types[0].type.name)
-		console.log(types[1]?.type.name) */
 
 		for (let i = 0; i < allTypes.length; i++) {
 			if (types[0].type.name === allTypes[i].name) {
@@ -28,13 +22,11 @@ export const PokeCard = (props: PokemonCardInfo) => {
 				typesTranslatedPokemon.push(i);
 			}
 		}
-		console.log(typesTranslated[typesTranslatedPokemon[0]]);
-		//console.log(types.find((types) => types.type.name === allTypes[0].name));
 	}
 
 	return (
 		<>
-			<div className="pokemonCard" style={{ border: "1px solid black" }}>
+			<div className="pokemonCard">
 				<div className="h5 text-center">{pokeDisplayName}</div>
 				<div className="row">
 					<div className="col-4 pb-2">
@@ -45,13 +37,15 @@ export const PokeCard = (props: PokemonCardInfo) => {
 						)}
 					</div>
 					<div className="col-8 row">
-						{typesTranslatedPokemon.map((i) => (
-							<div className="col-4">
-								{typesTranslatedPokemon.length > 0
-									? typesTranslated[i].name
-									: ""}
-							</div>
-						))}
+						{typesTranslatedPokemon.map((i) =>
+							typesTranslatedPokemon.length > 0 ? (
+								<div className={`col-4 pkm-type ${allTypes[i].name}`} key={i}>
+									<span>{typesTranslated[i].name}</span>
+								</div>
+							) : (
+								""
+							)
+						)}
 					</div>
 				</div>
 			</div>

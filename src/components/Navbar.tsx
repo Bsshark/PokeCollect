@@ -34,6 +34,7 @@ export const Navbar = () => {
 					aria-expanded={!isNavCollapsed ? true : false}
 					aria-label="Toggle navigation"
 					onClick={handleNavCollapse}
+					style={{marginBottom: "0.5em", boxShadow: "0px"}}
 				>
 					<span className="navbar-toggler-icon"></span>
 				</button>
@@ -56,12 +57,13 @@ export const Navbar = () => {
 						/>
 					</ul>
 					<ul className="navbar-nav ms-auto">
-						<li className="nav-item px-2 py-2">
+						<li className={`nav-item ${isMobile?'':'profile-item-mobile'}`}>
 							<NavLink
 								to="/profile"
-								className={({ isActive, isPending }) =>
-									isPending ? "pending" : isActive ? "active" : ""
-								}
+								/* className={({ isActive, isPending }) =>
+									isPending ? "pending" : isActive ? "active navItemLink px-2 py-2" : "navItemLink px-2 py-2"
+								} */
+								className="active navItemLink px-2 py-2"
 								style={{ textDecoration: "none", width: "100%" }}
 							>
 								{user.photoUrl ? (

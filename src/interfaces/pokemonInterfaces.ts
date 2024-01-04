@@ -13,8 +13,8 @@ export interface PokeState {
     nPagination?: number,
 	nStart?: number,
 	pokeSelected?: NamedAPIResourceList | null;
-	pokemonShown: Pokemon[];
-	types: RootTypes[]
+	pokemonShown: Pokemon[] | Pokemon;
+	types: RootTypes[];
 }
 
 
