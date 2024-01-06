@@ -78,3 +78,13 @@ body {
 	border: 1px solid black;
 	background-color: #f9c9c5;
 }
+
+/* -- Extra -- */
+.cursor:hover {
+	cursor: pointer;
+}
+
+.fa-disabled {
+	opacity: 0.6;
+	cursor: default !important;
+  }

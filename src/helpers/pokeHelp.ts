@@ -1,11 +1,11 @@
-import { RootTypes, Name } from "../interfaces/pokemonInterfaces";
+import { Name, PokemonType } from "../interfaces/PokedexInterfaces";
 export const findTypeInLanguage = (
 	language: string,
-	types: RootTypes[]
+	types: PokemonType[]
 ) => {
 	const langTypes: Name[] = [];
-	types.forEach((rootType) => {
-		let lang = rootType.names.find((name) => name.language.name === language);
+	types.forEach((pokemonType) => {
+		let lang = pokemonType.names.find((name) => name.language.name === language);
 		if (lang) {
 			langTypes.push(lang);
 		}

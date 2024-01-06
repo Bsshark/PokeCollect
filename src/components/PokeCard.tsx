@@ -3,6 +3,7 @@ import { usePokeStore } from "../hooks/usePokeStore";
 import { PokemonCardInfo } from "../interfaces";
 
 import "./PokeCard.scss";
+import missingSprite from "../assets/missingSprite.png";
 
 export const PokeCard = (props: PokemonCardInfo) => {
 	const { types: allTypes } = usePokeStore();
@@ -12,13 +13,11 @@ export const PokeCard = (props: PokemonCardInfo) => {
 
 	const typesTranslated = findTypeInLanguage("es", allTypes);
 	let typesTranslatedPokemon: number[] = [];
-
 	if (types) {
-
 		for (let i = 0; i < allTypes.length; i++) {
-			if (types[0].type.name === allTypes[i].name) {
+			if (types[0].name === allTypes[i].name) {
 				typesTranslatedPokemon.push(i);
-			} else if (types[1]?.type.name === allTypes[i].name) {
+			} else if (types[1]?.name === allTypes[i].name) {
 				typesTranslatedPokemon.push(i);
 			}
 		}
@@ -30,11 +29,13 @@ export const PokeCard = (props: PokemonCardInfo) => {
 				<div className="h5 text-center">{pokeDisplayName}</div>
 				<div className="row">
 					<div className="col-4 pb-2">
-						{sprite ? (
-							<img src={sprite} alt="" style={{ height: "8em" }} />
-						) : (
-							<div></div>
-						)}
+						{
+							<img
+								src={sprite ? sprite : missingSprite}
+								alt=""
+								style={{ height: "8em" }}
+							/>
+						}
 					</div>
 					<div className="col-8 row">
 						{typesTranslatedPokemon.map((i) =>

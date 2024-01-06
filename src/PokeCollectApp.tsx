@@ -9,7 +9,7 @@ export const PokeCollectApp = () => {
 			<Navbar />
 			<Routes>
 				<Route path="/profile" element={<ProfilePage />}></Route>
-				<Route path="/pokedex" element={<PokedexPage />}></Route>
+				<Route path="/pokedex" element={<PokedexPage/>}></Route>
 				<Route path="/collection" element={<CollectionPage />}></Route>
 				<Route path="/*" element={<Navigate to="/pokedex" />} />
 			</Routes>

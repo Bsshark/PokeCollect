@@ -8,8 +8,8 @@ export const LogoutBtn = () => {
 	};
 
 	return (
-		<button className="btn btn-primary" onClick={handleLogout}>
-			Logout
-		</button>
+		<div className="d-flex cursor">
+			<i className="bi bi-box-arrow-right h2 pt-1" onClick={handleLogout}></i>
+		</div>
 	);
 };

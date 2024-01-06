@@ -1,17 +1,8 @@
-import { useEffect } from "react";
 import { usePokeStore } from "../hooks/usePokeStore";
 import { PokeCard } from "./PokeCard";
 
 export const PokedexComponent = () => {
-	const { startLoadingPokes, startLoadingTypes, pokemonShown, isLoading } = usePokeStore();
-
-	useEffect(() => {
-		startLoadingPokes();
-	}, []);
-
-    useEffect(() => {
-        startLoadingTypes();
-    }, [])
+	const { pokemonShown, isLoading } = usePokeStore();
     
 
 	return (
