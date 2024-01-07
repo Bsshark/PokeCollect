@@ -1,4 +1,4 @@
-import { findTypeInLanguage } from "../helpers/pokeHelp";
+import { findTypeInLanguage, pokemonNameFix } from '../helpers/pokeHelp';
 import { usePokeStore } from "../hooks/usePokeStore";
 import { PokemonCardInfo } from "../interfaces";
 
@@ -14,19 +14,27 @@ export const PokeCard = (props: PokemonCardInfo) => {
 	const typesTranslated = findTypeInLanguage("es", allTypes);
 	let typesTranslatedPokemon: number[] = [];
 	if (types) {
-		for (let i = 0; i < allTypes.length; i++) {
+		for (let i = 0; i < types.length; i++) {
+			for (let j = 0; j < allTypes.length; j++) {
+				if(allTypes[j].name === types[i].name) {
+					typesTranslatedPokemon.push(j);
+				}
+			}
+		}
+
+		/* for (let i = 0; i < allTypes.length; i++) {
 			if (types[0].name === allTypes[i].name) {
 				typesTranslatedPokemon.push(i);
 			} else if (types[1]?.name === allTypes[i].name) {
 				typesTranslatedPokemon.push(i);
 			}
-		}
+		} */
 	}
 
 	return (
 		<>
 			<div className="pokemonCard">
-				<div className="h5 text-center">{pokeDisplayName}</div>
+				<div className="h5 text-center">{pokemonNameFix(pokeDisplayName)}</div>
 				<div className="row">
 					<div className="col-4 pb-2">
 						{
@@ -38,10 +46,13 @@ export const PokeCard = (props: PokemonCardInfo) => {
 						}
 					</div>
 					<div className="col-8 row">
-						{typesTranslatedPokemon.map((i) =>
+						{typesTranslatedPokemon.map((type) =>
 							typesTranslatedPokemon.length > 0 ? (
-								<div className={`col-4 pkm-type ${allTypes[i].name}`} key={i}>
-									<span>{typesTranslated[i].name}</span>
+								<div
+									className={`col-4 pkm-type ${allTypes[type].name}`}
+									key={type}
+								>
+									<span>{typesTranslated[type].name}</span>
 								</div>
 							) : (
 								""

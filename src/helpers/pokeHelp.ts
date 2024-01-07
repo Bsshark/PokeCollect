@@ -12,3 +12,17 @@ export const findTypeInLanguage = (
 	});
     return langTypes;
 };
+
+
+export const pokemonNameFix = (name: string) => {
+	switch(name) {
+		case 'Nidoran-f':
+			return 'Nidoran';
+		case 'Nidoran-m':
+			return 'Nidoran';
+
+
+		default:
+			return name;
+	}
+}

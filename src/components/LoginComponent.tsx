@@ -8,7 +8,7 @@ import { errMsgCredentialsLogin } from "../helpers/errorMessages";
 import { WelcomePageProps } from "../interfaces/componentsInterfaces";
 import { Link } from "react-router-dom";
 
-export const LoginComponent = (props: WelcomePageProps) => {
+export const LoginComponent = ({onClick}: WelcomePageProps) => {
 	const { startLogin, errorMessage } = useAuthStore();
 
 	const handleLogin = async (values: FormikValues) => {
@@ -77,7 +77,7 @@ export const LoginComponent = (props: WelcomePageProps) => {
 					</div>
 					<span>
 						¿No tienes una cuenta?{" "}
-						<Link to="/auth/login" onClick={props.onClick}>
+						<Link to="/auth/login" onClick={onClick}>
 							Regístrate
 						</Link>
 					</span>

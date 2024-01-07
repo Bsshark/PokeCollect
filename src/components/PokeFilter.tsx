@@ -1,48 +1,33 @@
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { usePokeStore } from "../hooks/usePokeStore";
+import { PokeFilterSearch } from "./PokeFilterSearch";
+import { PokeFilterArrowPage } from "./PokeFilterArrowPage";
 
 export const PokeFilter = () => {
 	const debounceRef = useRef<NodeJS.Timeout>();
-	const { startLoadingPokes, limit, from } = usePokeStore();
+	const { startLoadingPokes, isLoading } = usePokeStore();
 
 	const [search, setSearch] = useState("");
-	const [page, setPage] = useState(from);
-	const [hoverArrowLeft, setHoverArrowLeft] = useState(false);
-	const [hoverArrowRight, setHoverArrowRight] = useState(false);
+
 	const [firstLoad, setFirstLoad] = useState(true);
 
 	debounceRef.current = setTimeout(() => {
-		//todo: buscar
 		setFirstLoad(false);
 	}, 1000);
 
+	
+
 	useEffect(() => {
-		if ((search === "" || search.length > 2) && !firstLoad) {
+		if (!search && firstLoad) return;
+		if ((search.length < 1 || search.length > 3) && !firstLoad && !isLoading) {
 			onSearch(search);
 		}
 	}, [search]);
 
-	useEffect(() => {
-		if (page && !firstLoad) {
-			startLoadingPokes(undefined, limit, page);
-		}
-	}, [page]);
 
-	useEffect(() => {
-		setPage(from);
-	}, [firstLoad]);
-
-	const toggleHoverLeft = () => setHoverArrowLeft(!hoverArrowLeft);
-	const toggleHoverRight = () => setHoverArrowRight(!hoverArrowRight);
-
-	const handlePagination = (pageTo: number) => {
-		if ((page <= 1 && pageTo < 1) || search.length > 0) return;
-		setPage((prev) => prev + pageTo);
-		setFirstLoad(false);
-	};
+	
 
 	const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
-
 		setSearch(e.target.value);
 	};
 
@@ -59,44 +44,28 @@ export const PokeFilter = () => {
 		<nav className="navbar navbar-expand-sm">
 			<div className="container">
 				<div className="mr-auto d-flex">
-					<div className="">
-						<i
-							className={`bi ${
-								hoverArrowLeft && page > 1 && search.length < 1
-									? "bi-arrow-left-square-fill"
-									: "bi-arrow-left-square"
-							} 
-							${page < 2 || search.length > 0 ? "fa-disabled" : ""} px-2 h3 cursor`}
-							onMouseEnter={toggleHoverLeft}
-							onMouseLeave={toggleHoverLeft}
-							onClick={() => handlePagination(-9)}
-						></i>
-					</div>
-					<div className="">
-						<i
-							className={`bi ${
-								hoverArrowRight && search.length < 1
-									? "bi-arrow-right-square-fill"
-									: "bi-arrow-right-square"
-							}
-							${search.length > 0 ? "fa-disabled" : ""} px-2 h3 cursor`}
-							onMouseEnter={toggleHoverRight}
-							onMouseLeave={toggleHoverRight}
-							onClick={() => handlePagination(9)}
-						></i>
-					</div>
+					<PokeFilterArrowPage
+						isLoading={isLoading}
+						search={search}
+						arrowDirection="left"
+						pagination={-9}
+						firstLoad={firstLoad}
+					></PokeFilterArrowPage>
+					<PokeFilterArrowPage
+						isLoading={isLoading}
+						search={search}
+						arrowDirection="right"
+						pagination={9}
+						firstLoad={firstLoad}
+					></PokeFilterArrowPage>
 				</div>
 				<div className="ms-auto">
 					<div className="container row">
 						{/* <i className="bi bi-x-square-fill h5 pt-2 col-1" onClick={deleteSearchBar}></i> */}
 						<div className="col-12">
-							<input
-								className="form-control mr-sm-2"
-								type="search"
-								placeholder="Búsqueda"
-								aria-label="Search"
-								onChange={onSearchChange}
-								value={search}
+							<PokeFilterSearch
+								onSearchChange={onSearchChange}
+								search={search}
 							/>
 						</div>
 					</div>

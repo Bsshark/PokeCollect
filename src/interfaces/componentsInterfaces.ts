@@ -1,16 +1,30 @@
-import { AuthUser } from "."
+import { ChangeEvent } from "react";
+import { AuthUser } from ".";
 
 export interface WelcomePageProps {
-    onClick: () => void
+	onClick: () => void;
 }
 
 export interface NavProfileIconProps {
-    user: AuthUser;
-    isMobile: boolean;
+	user: AuthUser;
+	isMobile: boolean;
 }
 export interface NavPokemonItemProps {
-    isMobile: boolean;
-    to: string;
-    alt: string;
-    src: string;
+	isMobile: boolean;
+	to: string;
+	alt: string;
+	src: string;
+}
+
+export interface PokeFilterSearchProps {
+	onSearchChange: (e: ChangeEvent<HTMLInputElement>) => void;
+	search: string;
+}
+
+export interface PokeFilterArrowPageProps {
+    search: string;
+    isLoading: boolean;
+    arrowDirection: string;
+    pagination: number;
+	firstLoad: boolean;
 }
