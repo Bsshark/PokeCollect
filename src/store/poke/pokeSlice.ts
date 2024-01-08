@@ -10,6 +10,7 @@ export const pokeSlice = createSlice({
         limit: 9,
         from: 1,
         types: [],
+        dbTypes: [],
     },
     reducers: {
         startLoading: (state:PokeState) => {
@@ -23,6 +24,10 @@ export const pokeSlice = createSlice({
             state.types = payload;
             state.isLoading = false;
         },
+        onLoadDBTypes: (state: PokeState, { payload } : PayloadAction<PokemonType[]>) => {
+            state.dbTypes = payload;
+            state.isLoading = false;
+        },
         onSetPokedexLimits: (state: PokeState, { payload }: PayloadAction<{limit:number, from: number}>) => {
             state.limit = payload.limit;
             state.from = payload.from;
@@ -30,4 +35,4 @@ export const pokeSlice = createSlice({
         },
     }
 });
-export const { startLoading, onLoadPokemon, onLoadTypes, onSetPokedexLimits } = pokeSlice.actions;
+export const { startLoading, onLoadPokemon, onLoadTypes, onLoadDBTypes, onSetPokedexLimits } = pokeSlice.actions;

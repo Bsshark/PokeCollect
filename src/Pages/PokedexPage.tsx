@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { LoadingComponent } from "../components";
-import { PokeFilter } from "../components/PokeFilter";
+import { PokeFilter } from "../components/PokeFilterComponents/PokeFilter";
 import { PokedexComponent } from "../components/PokedexComponent";
 import { usePokeStore } from "../hooks/usePokeStore";
 

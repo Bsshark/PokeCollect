@@ -2,10 +2,10 @@ import { Pokemon, PokemonType } from './PokedexInterfaces';
 
 
 export interface PokemonCardInfo {
-	id?: number | null;
-	name?: string | null;
+	id: number | null;
+	name: string | null;
 	sprite?: string | null;
-	types?: PokemonType[] | null;
+	types: PokemonType[];
 }
 
 //Poke State
@@ -16,4 +16,5 @@ export interface PokeState {
 	pokeSelected?: Pokemon | null;
 	pokemonShown: Pokemon[] | Pokemon;
 	types: PokemonType[];
+	dbTypes?: PokemonType[];
 }

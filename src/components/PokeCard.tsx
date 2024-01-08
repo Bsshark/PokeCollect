@@ -1,40 +1,32 @@
-import { findTypeInLanguage, pokemonNameFix } from '../helpers/pokeHelp';
-import { usePokeStore } from "../hooks/usePokeStore";
+import { pokemonNameFix } from "../helpers/pokeHelp";
 import { PokemonCardInfo } from "../interfaces";
 
 import "./PokeCard.scss";
 import missingSprite from "../assets/missingSprite.png";
+import { usePokeStore } from "../hooks/usePokeStore";
 
-export const PokeCard = (props: PokemonCardInfo) => {
-	const { types: allTypes } = usePokeStore();
-
-	const { name, sprite, types } = props;
+export const PokeCard = ({ name, sprite, types, id }: PokemonCardInfo) => {
 	const pokeDisplayName = name!.charAt(0).toUpperCase() + name?.slice(1);
+	const { types: allTypes, dbTypes } = usePokeStore();
 
-	const typesTranslated = findTypeInLanguage("es", allTypes);
-	let typesTranslatedPokemon: number[] = [];
-	if (types) {
-		for (let i = 0; i < types.length; i++) {
-			for (let j = 0; j < allTypes.length; j++) {
-				if(allTypes[j].name === types[i].name) {
-					typesTranslatedPokemon.push(j);
-				}
-			}
+	let displayTypes = [];
+	for (let i = 0; i < types.length; i++) {
+		if (types[i].id && !dbTypes) return;
+		const newId = dbTypes.find((type) => type.name === types[i].name)?.id;
+		if (newId) {
+			displayTypes.push({ ...types[i], id: newId });
 		}
 
-		/* for (let i = 0; i < allTypes.length; i++) {
-			if (types[0].name === allTypes[i].name) {
-				typesTranslatedPokemon.push(i);
-			} else if (types[1]?.name === allTypes[i].name) {
-				typesTranslatedPokemon.push(i);
-			}
-		} */
+		//console.log(`tipo ${i} | ${a?.name}`)
 	}
+
+	/* const typesTranslated = findTypeInLanguage("es", types);
+	console.log(typesTranslated); */
 
 	return (
 		<>
 			<div className="pokemonCard">
-				<div className="h5 text-center">{pokemonNameFix(pokeDisplayName)}</div>
+				<div className="h5 text-center">{id}. - {pokemonNameFix(pokeDisplayName)}</div>
 				<div className="row">
 					<div className="col-4 pb-2">
 						{
@@ -46,13 +38,12 @@ export const PokeCard = (props: PokemonCardInfo) => {
 						}
 					</div>
 					<div className="col-8 row">
-						{typesTranslatedPokemon.map((type) =>
-							typesTranslatedPokemon.length > 0 ? (
-								<div
-									className={`col-4 pkm-type ${allTypes[type].name}`}
-									key={type}
-								>
-									<span>{typesTranslated[type].name}</span>
+						{displayTypes.map((type) =>
+							types.length > 0 ? (
+								<div className={`col-4 pkm-type ${type.name}`} key={type.id}>
+									<span>
+										{allTypes.find((findType) => findType.id === type.id)?.name}
+									</span>
 								</div>
 							) : (
 								""

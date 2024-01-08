@@ -1,6 +1,7 @@
 import { useAppDispatch, useAppSelector } from ".";
 import { PokeState } from "../interfaces";
 import {
+	onLoadDBTypes,
 	onLoadPokemon,
 	onLoadTypes,
 	onSetPokedexLimits,
@@ -8,6 +9,7 @@ import {
 } from "../store/poke/pokeSlice";
 import pokeApi from "../api/pokeApi";
 import { Pokemon, PokemonType } from "../interfaces/PokedexInterfaces";
+import { findTypeInLanguage } from "../helpers/pokeHelp";
 
 export const usePokeStore = () => {
 	const dispatch = useAppDispatch();
@@ -21,6 +23,7 @@ export const usePokeStore = () => {
 		limit = 9,
 		from = 1,
 		types,
+		dbTypes,
 	}: PokeState = useAppSelector((state) => state.poke);
 
 	const startLoadingPokes = async (
@@ -51,15 +54,15 @@ export const usePokeStore = () => {
 						});
 						dispatch(onLoadPokemon(pokemonToShow));
 					});
-				} else if(query === "" || !query) {
+				} else if (query === "" || !query) {
 					pokeApi
 						.get(`/pokemon/pagination/page`, { headers: headerConfig })
 						.then((result) => {
 							result.data.forEach((pokemon: Pokemon) => {
 								pokemonToShow.push(pokemon);
 							});
-							localStorage.setItem('limit', headerConfig.limit.toString());
-							localStorage.setItem('from', headerConfig.from.toString());
+							localStorage.setItem("limit", headerConfig.limit.toString());
+							localStorage.setItem("from", headerConfig.from.toString());
 
 							dispatch(onLoadPokemon(pokemonToShow));
 							dispatch(
@@ -98,7 +101,8 @@ export const usePokeStore = () => {
 				results.map((result) => {
 					pokeTypes.push(result.data);
 				});
-				dispatch(onLoadTypes(pokeTypes));
+				dispatch(onLoadDBTypes(pokeTypes));
+				dispatch(onLoadTypes(findTypeInLanguage("es", pokeTypes)));
 			});
 		} catch (error) {
 			console.log(error);
@@ -122,6 +126,7 @@ export const usePokeStore = () => {
 		types,
 		limit,
 		from,
+		dbTypes,
 		//Metodos
 		startLoadingPokes,
 		startLoadingTypes,

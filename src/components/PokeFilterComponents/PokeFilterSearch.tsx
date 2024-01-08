@@ -1,4 +1,4 @@
-import { PokeFilterSearchProps } from "../interfaces/componentsInterfaces";
+import { PokeFilterSearchProps } from "../../interfaces/componentsInterfaces";
 
 export const PokeFilterSearch = ({onSearchChange, search}: PokeFilterSearchProps) => {
 
