@@ -32,7 +32,6 @@ export const PokeFilterArrowPage = ({
 		if (!page) return;
 		if (!firstLoad) {
 			const newFrom = ((page*9)-9)===0?1:((page*9)-8);
-			console.log(`newFrom: ${newFrom}`)
 			startLoadingPokes(undefined, limit, newFrom);
 		}
 	}, [page]);
@@ -40,7 +39,6 @@ export const PokeFilterArrowPage = ({
 	useEffect(() => {
 		if ("from" in localStorage) {
 			const currentFrom = Number(localStorage.getItem("from"));
-			console.log(`currentFrom: ${currentFrom}`)
 			setPage(currentFrom>1?(currentFrom/9)+1:currentFrom);
 		}
 	}, []);

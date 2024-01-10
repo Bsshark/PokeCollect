@@ -1,11 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { authSlice } from "./auth/authSlice";
 import { pokeSlice } from "./poke/pokeSlice";
+import { collectionSlice } from "./collection/collectionSlice";
+import { encounterSlice } from "./encounter/encounterSlice";
 
 export const store = configureStore({
 	reducer: {
 		auth: authSlice.reducer,
 		poke: pokeSlice.reducer,
+		collection: collectionSlice.reducer,
+		encounter: encounterSlice.reducer,
 	},
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware({

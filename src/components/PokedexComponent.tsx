@@ -2,12 +2,9 @@ import { useEffect } from "react";
 import { usePokeStore } from "../hooks/usePokeStore";
 import { PokeCard } from "./PokeCard";
 import { animated, useSpring } from "@react-spring/web";
-import { findDescInLanguage, findSpeciesById, findTypeInLanguage } from "../helpers/pokeHelp";
-import { Flavor_Text, PokemonSpecies } from '../interfaces/PokedexInterfaces';
 
 export const PokedexComponent = () => {
-
-	const { pokemonShown, isLoading, pokemonSpecies } = usePokeStore();
+	const { pokemonShown, isLoading } = usePokeStore();
 
 	const [springs, api] = useSpring(() => ({
 		from: { opacity: 0 },
@@ -22,27 +19,6 @@ export const PokedexComponent = () => {
 			});
 		}
 	}, [isLoading]);
-
-	
-	
-
-	/* if (types) {
-		for (let i = 0; i < types.length; i++) {
-			for (let j = 0; j < allTypes.length; j++) {
-				if(allTypes[j].name === types[i].name) {
-					typesTranslatedPokemon.push(j);
-				}
-			}
-		} */
-
-		/* for (let i = 0; i < allTypes.length; i++) {
-			if (types[0].name === allTypes[i].name) {
-				typesTranslatedPokemon.push(i);
-			} else if (types[1]?.name === allTypes[i].name) {
-				typesTranslatedPokemon.push(i);
-			}
-		} 
-	}*/
 
 	return (
 		<>

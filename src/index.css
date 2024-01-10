@@ -94,7 +94,8 @@ body {
 	align-items: center;
 	justify-content: center;
 	font-family: "Cinzel", serif;
-	background-color: rgba(244, 151, 142, 0.76)
+	background-color: rgba(244, 151, 142, 0.76);
+	max-height: auto;
 }
 
 /* -- Extra -- */

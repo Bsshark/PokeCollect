@@ -20,7 +20,7 @@ export const PokeFilterPagination = ({
 	const pagesToShow = [];
 	for (let i = -2, j = 0; j < 5; i++) {
 		if (page + i > 0) {
-			pagesToShow.push(page + i);
+			pagesToShow.push(Math.trunc(page + i));
 		} else {
 			j--;
 		}

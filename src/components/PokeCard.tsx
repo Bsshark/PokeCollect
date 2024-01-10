@@ -49,7 +49,7 @@ export const PokeCard = ({
 						<div className="col-12 row">
 							{displayTypes.map((type) =>
 								types.length > 0 ? (
-									<div className={`col-4 pkm-type ${type.name}`} key={type.id}>
+									<div className={`col-sm-4 pkm-type ${type.name}`} key={type.id}>
 										<span>
 											{
 												allTypes.find((findType) => findType.id === type.id)
@@ -62,7 +62,7 @@ export const PokeCard = ({
 								)
 							)}
 						</div>
-						<div className="col-12 row desc">{desc}</div>
+						<div className="col-12 row desc">{desc?desc:'Descripción no encontrada'}</div>
 					</div>
 				</div>
 			</div>

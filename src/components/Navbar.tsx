@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import PokedexLogo from "./../assets/pokedex.png";
 import PokeballNav from "./../assets/pokeball-nav.png";
+import CollectionIcon from '../assets/collectionIcon.png';
 import { useAppSelector } from "../hooks";
 import { AuthState } from "../interfaces";
 import { NavProfileIcon } from "./NavProfileIcon";
@@ -52,8 +53,14 @@ export const Navbar = () => {
 						<NavPokemonItem
 							isMobile={isMobile}
 							to="collection"
-							src={PokeballNav}
+							src={CollectionIcon}
 							alt="Colección"
+						/>
+						<NavPokemonItem
+							isMobile={isMobile}
+							to="encounter"
+							src={PokeballNav}
+							alt="Capturar"
 						/>
 					</ul>
 					<ul className="navbar-nav ms-auto">
