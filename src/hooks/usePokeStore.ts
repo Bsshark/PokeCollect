@@ -3,13 +3,18 @@ import { PokeState } from "../interfaces";
 import {
 	onLoadDBTypes,
 	onLoadPokemon,
+	onLoadSpecies,
 	onLoadTypes,
 	onSetPokedexLimits,
 	startLoading,
 } from "../store/poke/pokeSlice";
 import pokeApi from "../api/pokeApi";
-import { Pokemon, PokemonType } from "../interfaces/PokedexInterfaces";
-import { findTypeInLanguage } from "../helpers/pokeHelp";
+import {
+	Pokemon,
+	PokemonSpecies,
+	PokemonType,
+} from "../interfaces/PokedexInterfaces";
+import { findSpeciesById, findTypeInLanguage } from "../helpers/pokeHelp";
 
 export const usePokeStore = () => {
 	const dispatch = useAppDispatch();
@@ -24,6 +29,7 @@ export const usePokeStore = () => {
 		from = 1,
 		types,
 		dbTypes,
+		pokemonSpecies,
 	}: PokeState = useAppSelector((state) => state.poke);
 
 	const startLoadingPokes = async (
@@ -47,43 +53,81 @@ export const usePokeStore = () => {
 		(async () => {
 			try {
 				var pokemonToShow: Pokemon[] = [];
+				var speciesPromises: Promise<any>[] = [];
 				if (query !== "" && query) {
 					pokeApi.get(`/pokemon/name/${query}`).then((result) => {
 						result.data.forEach((pokemon: Pokemon) => {
-							pokemonToShow.push(pokemon);
+							speciesPromises.push(
+								pokeApi.get(`/pokemon/species/${pokemon.id}`)
+							);
 						});
-						dispatch(onLoadPokemon(pokemonToShow));
+						Promise.all(speciesPromises).then((resultSpecies) => {
+							const speciesData: PokemonSpecies[] = [];
+							resultSpecies.forEach((result) => {
+								speciesData.push(result.data);
+							});
+							result.data.forEach((pokemonFetched: Pokemon) => {
+								const specie = speciesData.find(
+									(specie) => specie.id === pokemonFetched.id
+								);
+								if (specie) {
+									const desc = findSpeciesById(specie, "es");
+									if (desc) {
+										pokemonToShow.push({
+											...pokemonFetched,
+											desc: desc.flavor_text,
+										});
+									} else {
+										pokemonToShow.push(pokemonFetched);
+									}
+								}
+							});
+							dispatch(onLoadPokemon(pokemonToShow));
+						});
 					});
 				} else if (query === "" || !query) {
 					pokeApi
 						.get(`/pokemon/pagination/page`, { headers: headerConfig })
 						.then((result) => {
 							result.data.forEach((pokemon: Pokemon) => {
-								pokemonToShow.push(pokemon);
+								speciesPromises.push(
+									pokeApi.get(`/pokemon/species/${pokemon.id}`)
+								);
 							});
-							localStorage.setItem("limit", headerConfig.limit.toString());
-							localStorage.setItem("from", headerConfig.from.toString());
+							Promise.all(speciesPromises).then((resultSpecies) => {
+								const speciesData: PokemonSpecies[] = [];
+								resultSpecies.forEach((result) => {
+									speciesData.push(result.data);
+								});
 
-							dispatch(onLoadPokemon(pokemonToShow));
-							dispatch(
-								onSetPokedexLimits({
-									limit: headerConfig.limit,
-									from: headerConfig.from,
-								})
-							);
+								result.data.forEach((pokemonFetched: Pokemon) => {
+									const specie = speciesData.find(
+										(specie) => specie.id === pokemonFetched.id
+									);
+									if (specie) {
+										const desc = findSpeciesById(specie, "es");
+										if (desc) {
+											pokemonToShow.push({
+												...pokemonFetched,
+												desc: desc.flavor_text,
+											});
+										}
+									}
+								});
+								localStorage.setItem("limit", headerConfig.limit.toString());
+								localStorage.setItem("from", headerConfig.from.toString());
+
+								dispatch(onLoadPokemon(pokemonToShow));
+								dispatch(
+									onSetPokedexLimits({
+										limit: headerConfig.limit,
+										from: headerConfig.from,
+									})
+								);
+							});
 						});
-
-					/* const pokemonData = await api.listPokemons(nStart, nPagination);
-
-					const promises = pokemonData.results.map((res) => pokeApi.get(res.url));
-					Promise.all(promises).then((results) => {
-						pokemonToShow = [];
-						results.map((result) => {
-							pokemonToShow.push(result.data);
-						});
-						dispatch(onLoadPokemon(pokemonToShow));
-					}); */
 				}
+				//Descs
 			} catch (error) {
 				console.error(error);
 			}
@@ -109,14 +153,51 @@ export const usePokeStore = () => {
 		}
 	};
 
-	const startSearchingPokemonByName = async (pokemonName: string) => {
-		/* dispatch(startLoading());
+	const startLoadingPokemonSpecies = async (id?: string, ids?: string[]) => {
 		try {
-			const results = await pokeApi.get(`/pokemon/name/${pokemonName}`);
-			dispatch(onLoadTypes(results.data));
-		} catch (error) {
-			console.log(error);
-		} */
+			if (id) {
+				//By ID
+				pokeApi.get(`/pokemon/species/${id}`).then((result) => {});
+			} else if (ids) {
+				//Get all by ID
+				const pokemonSpeciesToShow: PokemonSpecies[] = [];
+				const speciesPromises: Promise<any>[] = [];
+				ids.forEach((id) => {
+					speciesPromises.push(pokeApi(`/pokemon/species/${id}`));
+				});
+				Promise.all(speciesPromises).then((results) => {
+					results.map((result) => {
+						pokemonSpeciesToShow.push(result.data);
+					});
+					dispatch(onLoadSpecies(pokemonSpeciesToShow));
+				});
+			} else {
+				//Get all by page
+				const pokemonSpeciesToShow: PokemonSpecies[] = [];
+				const speciesPromises: Promise<any>[] = [];
+				let ids: Number[] = [];
+				pokemonShown.forEach((pokemon) => {
+					ids.push(pokemon.id);
+				});
+
+				ids.forEach((id) => {
+					speciesPromises.push(pokeApi(`/pokemon/species/${id}`));
+				});
+				Promise.all(speciesPromises).then((results) => {
+					results.map((result) => {
+						pokemonSpeciesToShow.push(result.data);
+					});
+					pokemonSpeciesToShow.map((specie) => {
+						console.log(
+							specie.flavor_text_entries.find(
+								(entry) => entry.language.name === "es"
+							)?.flavor_text
+						);
+					});
+					dispatch(onLoadSpecies(pokemonSpeciesToShow));
+				});
+			}
+		} catch (error) {}
 	};
 
 	return {
@@ -127,9 +208,9 @@ export const usePokeStore = () => {
 		limit,
 		from,
 		dbTypes,
+		pokemonSpecies,
 		//Metodos
 		startLoadingPokes,
 		startLoadingTypes,
-		startSearchingPokemonByName,
 	};
 };

@@ -5,7 +5,13 @@ import "./PokeCard.scss";
 import missingSprite from "../assets/missingSprite.png";
 import { usePokeStore } from "../hooks/usePokeStore";
 
-export const PokeCard = ({ name, sprite, types, id }: PokemonCardInfo) => {
+export const PokeCard = ({
+	name,
+	sprite,
+	types,
+	id,
+	desc,
+}: PokemonCardInfo) => {
 	const pokeDisplayName = name!.charAt(0).toUpperCase() + name?.slice(1);
 	const { types: allTypes, dbTypes } = usePokeStore();
 
@@ -26,7 +32,9 @@ export const PokeCard = ({ name, sprite, types, id }: PokemonCardInfo) => {
 	return (
 		<>
 			<div className="pokemonCard">
-				<div className="h5 text-center">{id}. - {pokemonNameFix(pokeDisplayName)}</div>
+				<div className="h5 text-center">
+					{id}. {pokemonNameFix(pokeDisplayName)}
+				</div>
 				<div className="row">
 					<div className="col-4 pb-2">
 						{
@@ -38,17 +46,23 @@ export const PokeCard = ({ name, sprite, types, id }: PokemonCardInfo) => {
 						}
 					</div>
 					<div className="col-8 row">
-						{displayTypes.map((type) =>
-							types.length > 0 ? (
-								<div className={`col-4 pkm-type ${type.name}`} key={type.id}>
-									<span>
-										{allTypes.find((findType) => findType.id === type.id)?.name}
-									</span>
-								</div>
-							) : (
-								""
-							)
-						)}
+						<div className="col-12 row">
+							{displayTypes.map((type) =>
+								types.length > 0 ? (
+									<div className={`col-4 pkm-type ${type.name}`} key={type.id}>
+										<span>
+											{
+												allTypes.find((findType) => findType.id === type.id)
+													?.name
+											}
+										</span>
+									</div>
+								) : (
+									""
+								)
+							)}
+						</div>
+						<div className="col-12 row desc">{desc}</div>
 					</div>
 				</div>
 			</div>

@@ -1,4 +1,21 @@
 .paginationItem {
-    background-color: #f4978e;
-    width: 2em;
+	background-color: #f4978e;
+	width: 2em;
+	text-align: center;
+	list-style-type: none;
+	display: inline-block;
+	font-size: 1.2em;
+	padding-top: 0.1em;
+    max-height: 1.9em;
+}
+.paginationItem:hover {
+	background-color: #724642;
+    border-radius: 10%;
+	color: white;
+}
+.paginationItem.active {
+    background-color: #724642;
+    border-radius: 10%;
+	color: white;
+    cursor: default !important;
 }

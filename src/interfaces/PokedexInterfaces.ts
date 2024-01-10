@@ -6,6 +6,7 @@ export interface Pokemon {
 	name: string;
 	sprites: Sprites;
 	types: PokemonType[];
+	desc: string;
 	weight: number;
 	__v: number;
 }
@@ -52,11 +53,22 @@ export interface PokemonSpecies {
 	capture_rate: number;
 	evolution_chain: EvolutionChain;
 	evolves_from_species: EvolvesFromSpecies;
-	flavor_text_entries: any[];
+	flavor_text_entries: Flavor_Text[];
 	genera: any[];
 	generation: Generation;
 	is_legendary: boolean;
 	__v: number;
+}
+
+export interface Flavor_Text {
+	flavor_text: string;
+	language: Language;
+	version: Version;
+}
+
+export interface Version {
+	name: string;
+	url: string;
 }
 
 export interface Id {

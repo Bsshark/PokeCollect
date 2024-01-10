@@ -2,12 +2,12 @@ import { useEffect } from "react";
 import { usePokeStore } from "../hooks/usePokeStore";
 import { PokeCard } from "./PokeCard";
 import { animated, useSpring } from "@react-spring/web";
-import { findTypeInLanguage } from "../helpers/pokeHelp";
+import { findDescInLanguage, findSpeciesById, findTypeInLanguage } from "../helpers/pokeHelp";
+import { Flavor_Text, PokemonSpecies } from '../interfaces/PokedexInterfaces';
 
 export const PokedexComponent = () => {
-	const { types: allTypes } = usePokeStore();
 
-	const { pokemonShown, isLoading } = usePokeStore();
+	const { pokemonShown, isLoading, pokemonSpecies } = usePokeStore();
 
 	const [springs, api] = useSpring(() => ({
 		from: { opacity: 0 },
@@ -23,9 +23,7 @@ export const PokedexComponent = () => {
 		}
 	}, [isLoading]);
 
-
 	
-
 	
 
 	/* if (types) {
@@ -63,6 +61,7 @@ export const PokedexComponent = () => {
 									id={poke.id}
 									sprite={poke.sprites.front_default}
 									types={poke.types}
+									desc={poke.desc}
 								/>
 							</animated.div>
 						))

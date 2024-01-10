@@ -1,5 +1,5 @@
 html {
-    overflow-y: scroll;
+	overflow-y: scroll;
 }
 
 html,
@@ -83,6 +83,18 @@ body {
 .pokemonCard {
 	border: 1px solid black;
 	background-color: #f9c9c5;
+	height: 13em;
+}
+.pokemonCard .desc {
+	border: 1px solid #333;
+	border-style: outset;
+	font-size: 1em;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	align-items: center;
+	justify-content: center;
+	font-family: "Cinzel", serif;
+	background-color: rgba(244, 151, 142, 0.76)
 }
 
 /* -- Extra -- */
@@ -93,4 +105,4 @@ body {
 .fa-disabled {
 	opacity: 0.6;
 	cursor: default !important;
-  }
+}

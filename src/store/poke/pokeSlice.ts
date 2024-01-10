@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { PokeState} from '../../interfaces/pokemonInterfaces';
-import { Pokemon, PokemonType } from '../../interfaces/PokedexInterfaces';
+import { Pokemon, PokemonSpecies, PokemonType } from '../../interfaces/PokedexInterfaces';
 export const pokeSlice = createSlice({
     name: 'poke',
     initialState: {
@@ -11,6 +11,7 @@ export const pokeSlice = createSlice({
         from: 1,
         types: [],
         dbTypes: [],
+        pokemonSpecies: []
     },
     reducers: {
         startLoading: (state:PokeState) => {
@@ -33,6 +34,10 @@ export const pokeSlice = createSlice({
             state.from = payload.from;
             state.isLoading = false;
         },
+        onLoadSpecies: (state: PokeState, { payload }: PayloadAction<PokemonSpecies[]>) => {
+            state.pokemonSpecies = payload;
+            state.isLoading = false;
+        }
     }
 });
-export const { startLoading, onLoadPokemon, onLoadTypes, onLoadDBTypes, onSetPokedexLimits } = pokeSlice.actions;
+export const { startLoading, onLoadPokemon, onLoadTypes, onLoadDBTypes, onLoadSpecies, onSetPokedexLimits } = pokeSlice.actions;

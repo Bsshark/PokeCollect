@@ -5,7 +5,11 @@ import { PokedexComponent } from "../components/PokedexComponent";
 import { usePokeStore } from "../hooks/usePokeStore";
 
 export const PokedexPage = () => {
-	const { startLoadingPokes, startLoadingTypes, isLoading } = usePokeStore();
+	const {
+		startLoadingPokes,
+		startLoadingTypes,
+		isLoading,
+	} = usePokeStore();
 
 	useEffect(() => {
 		startLoadingPokes();

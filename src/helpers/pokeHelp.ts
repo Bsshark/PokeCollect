@@ -1,4 +1,4 @@
-import { Name, PokemonType } from "../interfaces/PokedexInterfaces";
+import { Flavor_Text, Language, Pokemon, PokemonSpecies, PokemonType } from '../interfaces/PokedexInterfaces';
 export const findTypeInLanguage = (language: string, types: PokemonType[]) => {
 	let langTypes: PokemonType[] = [];
 
@@ -9,18 +9,17 @@ export const findTypeInLanguage = (language: string, types: PokemonType[]) => {
 			langTypes.push(translatedType);
 		}
 	}
-
-	/* let i = 0;
-	types.forEach((pokemonType) => {
-		let lang = pokemonType.names.find(
-			(name) => name.language.name === language
-		);
-		if (lang) {
-			langTypes = [...pokemonType];
-		}
-	}); */
 	return langTypes;
 };
+
+export const findDescInLanguage = (language: string, descs: Flavor_Text[]) => {
+	return descs.find((entries) => entries.language.name === language);
+}
+
+export const findSpeciesById = (pokemonSpecies: PokemonSpecies, lang: string) => {
+	return pokemonSpecies.flavor_text_entries.find((fte) => fte.language.name === lang);
+	//return pokemonSpecies.find((specie) => specie.id === pokemon.id)?.flavor_text_entries.find((entry) => entry.language.name === lang)?.flavor_text
+}
 
 export const pokemonNameFix = (name: string) => {
 	switch (name) {
