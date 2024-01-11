@@ -9,6 +9,7 @@ export const EncounterComponent = () => {
 		useEncounterStore();
 
 	const [canPass, setCanPass] = useState(false);
+	const [isShiny, setIsShiny] = useState(false);
 
 	var intervalCheckCatch;
 
@@ -21,9 +22,24 @@ export const EncounterComponent = () => {
 	}, [isLoading])
 
 	useEffect(() => {
+		if(!("isShiny" in localStorage)) return;
+		setIsShiny(JSON.parse(localStorage.getItem("isShiny")!));
+	}, [])
+	
+	
+
+	useEffect(() => {
 		setCanPass(checkCanPass())
 	}, [])
 	
+	const handleShiny = () => {
+		const shinyRandom = Math.round(Math.random() * (4000 - 1 + 1) + 1);
+		if(shinyRandom < 3000) {
+			setIsShiny(true);
+		}else {
+			setIsShiny(false);
+		}
+	}
 
 
 	return (
@@ -35,6 +51,7 @@ export const EncounterComponent = () => {
 					<EncounterPokemon
 						currentPokemon={pokemon}
 						isCaptured={isCaptured}
+						isShiny={isShiny}
 					/>
 				)}
 			</div>
@@ -44,7 +61,7 @@ export const EncounterComponent = () => {
 					className={`btn btn-outline-dark col-sm-2 ${
 						isLoading || !canPass ? "disabled" : ""
 					}`}
-					onClick={() => { startLoadingPokemon(true), setCanPass(checkCanPass(true))}}
+					onClick={() => { startLoadingPokemon(true),setCanPass(checkCanPass(true)), handleShiny()}}
 				>
 					<i className="bi bi-shuffle text-center"></i>
 				</button>
