@@ -1,4 +1,3 @@
-import { pokemonNameFix } from "../helpers/pokeHelp";
 import { PokemonCardInfo } from "../interfaces";
 
 import "./PokeCard.scss";
@@ -33,7 +32,7 @@ export const PokeCard = ({
 		<>
 			<div className="pokemonCard">
 				<div className="h5 text-center">
-					{id}. {pokemonNameFix(pokeDisplayName)}
+					{id}. {pokeDisplayName}
 				</div>
 				<div className="row">
 					<div className="col-4 pb-2">

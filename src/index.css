@@ -102,6 +102,22 @@ body {
 .cursor:hover {
 	cursor: pointer;
 }
+.shuffle-icon {
+	border-style: outset;
+	border-radius: 40%;
+	transition: all 0.1s ease-in-out;
+}
+.shuffle-icon:hover {
+	cursor: pointer;
+	background-color: #db8b84 ;
+	color: white;
+	transform: scale(1.2);
+}
+.shuffle-icon:active{
+	background-color: #db8b84be;
+}
+
+
 
 .fa-disabled {
 	opacity: 0.6;

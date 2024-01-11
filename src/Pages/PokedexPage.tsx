@@ -22,6 +22,7 @@ export const PokedexPage = () => {
 	return (
 		<div className="container pokedex justify-content-center flex-column">
 			<div className="h1 titlePokedex flex-row text-center">Pokédex</div>
+			<hr />
 			<div className="flex-row">
 				<PokeFilter />
 			</div>

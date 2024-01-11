@@ -1,10 +1,9 @@
 import { useEffect } from "react";
-import { LoadingComponent } from "../components";
-import { EncounterComponent } from "../components/EncounterComponent";
+import { EncounterComponent } from "../components/EncounterComponents/EncounterComponent";
 import { useEncounterStore } from "../hooks/useEncounterStore";
 
 export const EncounterPage = () => {
-	const { isLoading, startLoadingPokemon } = useEncounterStore();
+	const { startLoadingPokemon } = useEncounterStore();
 
 	useEffect(() => {
 		startLoadingPokemon();
@@ -13,15 +12,8 @@ export const EncounterPage = () => {
 	return (
 		<div className="container justify-content-center flex-column">
 			<div className="h1 titlePokedex flex-row text-center">Capturar</div>
-			{isLoading ? (
-				<>
-					<LoadingComponent />
-				</>
-			) : (
-				<>
-					<EncounterComponent />
-				</>
-			)}
+			<hr />
+			<EncounterComponent/>
 		</div>
 	);
 };

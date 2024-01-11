@@ -5,5 +5,6 @@ export interface EncounterState {
 	nRandom: number | null;
 	nShinyRandom: number | null;
 	pokemon: Pokemon;
-    isCaptured: boolean;
+	isCaptured: boolean;
+	pokeballSelected: string;
 }
