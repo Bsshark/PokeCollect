@@ -1,11 +1,15 @@
 import { Pokemon, PokemonSpecies, PokemonType } from "./PokedexInterfaces";
 
 export interface PokemonCardInfo {
+	isLoading: boolean;
 	id: number | null;
 	name: string | null;
 	sprite?: string | null;
 	types: PokemonType[];
 	desc?: String;
+	showData?: boolean;
+	caught_date?: Date;
+	isShiny?: boolean ;
 }
 
 //Poke State

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./PokeFilter.css";
 import { PokeFilterArrowPage } from "./PokeFilterArrowPage";
 import { usePokeStore } from "../../hooks/usePokeStore";
@@ -15,17 +15,27 @@ export const PokeFilterPagination = ({
 	firstLoad,
 }: PokeFilterPaginationProps) => {
 	const { from } = usePokeStore();
-	const [page, setPage] = useState((from + 8) / 9);
+	const [page, setPage] = useState(Math.floor((from + 8) / 9));
+	const [pagesToShow, setPagesToShow] = useState([1,2,3,4,5]);
 
-	const pagesToShow = [];
-	for (let i = -2, j = 0; j < 5; i++) {
-		if (page + i > 0) {
-			pagesToShow.push(Math.trunc(page + i));
-		} else {
-			j--;
+	useEffect(() => {
+	  calcularPaginacion(page);
+	}, [page])
+	
+
+	const calcularPaginacion = (currentPage: number) => {
+		var pagesArray = [];
+		for (let i = -2, j = 0; j < 5; i++) {
+			if (currentPage + i > 0) {
+				pagesArray.push(Math.ceil(currentPage + i));
+			} else {
+				j--;
+			}
+			j++;
 		}
-		j++;
+		setPagesToShow(pagesArray);
 	}
+
 
 	return (
 		<nav className="flex">
@@ -39,13 +49,13 @@ export const PokeFilterPagination = ({
 					setPage={setPage}
 					page={page}
 				></PokeFilterArrowPage>
-				{pagesToShow.map((pageText) => (
+				{pagesToShow?pagesToShow.map((pageText) => (
 					<li className={`paginationItem ${search?'fa-disabled':'cursor'} ${page===pageText?'active':''}`} key={pageText}>
 						<a className="page-link" onClick={() => search?() => {}:setPage(pageText)}>
 							{pageText}
 						</a>
 					</li>
-				))}
+				)): ''}
 				<PokeFilterArrowPage
 					isLoading={isLoading}
 					search={search}

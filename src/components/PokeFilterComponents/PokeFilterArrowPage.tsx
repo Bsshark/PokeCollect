@@ -39,7 +39,7 @@ export const PokeFilterArrowPage = ({
 	useEffect(() => {
 		if ("from" in localStorage) {
 			const currentFrom = Number(localStorage.getItem("from"));
-			setPage(currentFrom>1?(currentFrom/9)+1:currentFrom);
+			setPage(currentFrom>1?((currentFrom+8)/9):currentFrom);
 		}
 	}, []);
 

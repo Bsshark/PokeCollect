@@ -38,6 +38,7 @@ export const PokedexComponent = () => {
 									sprite={poke.sprites.front_default}
 									types={poke.types}
 									desc={poke.desc}
+									isLoading={isLoading}
 								/>
 							</animated.div>
 						))

@@ -4,14 +4,14 @@ import {
 	checkingStatus,
 	notAuthenticatedStatus,
 } from "../../helpers";
-import { AuthErrorMessage, AuthState } from "../../interfaces/authInterfaces";
+import { AuthErrorMessage, AuthState } from '../../interfaces/authInterfaces';
 export const authSlice = createSlice({
 	name: "auth",
 	initialState: {
 		status: checkingStatus,
 		user: {},
 		errorMessage: null,
-	},
+	} as AuthState,
 	reducers: {
 		onCheckingCredentials: (state: AuthState) => {
 			state.status = checkingStatus;

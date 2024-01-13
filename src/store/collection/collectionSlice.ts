@@ -3,9 +3,9 @@ import { Collection, CollectionState } from '../../interfaces';
 export const collectionSlice = createSlice({
     name: 'collection',
     initialState: {
-        isLoading: false,
-        collection: null
-    },
+        isLoading: true,
+        collection: {}
+    } as CollectionState,
     reducers: {
         startLoading: (state: CollectionState) => {
             state.isLoading = true;

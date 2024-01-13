@@ -3,10 +3,12 @@ import { LoadingComponent } from "..";
 import { useEncounterStore } from "../../hooks/useEncounterStore";
 import { EncounterPokemon } from "./EncounterPokemon";
 import { checkCanPass } from '../../helpers/pokeHelp';
+import { useAuthStore } from "../../hooks";
 
 export const EncounterComponent = () => {
 	const { isCaptured, isLoading, pokemon, startLoadingPokemon,startCatchingPokemon } =
 		useEncounterStore();
+	const { user } = useAuthStore();
 
 	const [canPass, setCanPass] = useState(false);
 	const [isShiny, setIsShiny] = useState(false);
@@ -66,7 +68,7 @@ export const EncounterComponent = () => {
 					<i className="bi bi-shuffle text-center"></i>
 				</button>
 				<span className="py-2"></span>
-				<button type="button" className={`btn btn-outline-dark col-sm-2`} onClick={() =>startCatchingPokemon(pokemon)}>Capturar</button>
+				<button type="button" className={`btn btn-outline-dark col-sm-2`} onClick={() =>startCatchingPokemon({...pokemon, isShiny, date_caught: new Date()}, user)}>Capturar</button>
 				{/* <div className="col-sm-2 shuffle-icon align-items-center text-center">
 					<i className="bi bi-shuffle text-center "></i>
 				</div> */}

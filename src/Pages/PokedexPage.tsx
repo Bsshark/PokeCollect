@@ -7,7 +7,6 @@ import { usePokeStore } from "../hooks/usePokeStore";
 export const PokedexPage = () => {
 	const {
 		startLoadingPokes,
-		startLoadingTypes,
 		isLoading,
 	} = usePokeStore();
 
@@ -15,10 +14,7 @@ export const PokedexPage = () => {
 		startLoadingPokes();
 	}, []);
 
-	useEffect(() => {
-		startLoadingTypes();
-	}, []);
-
+	
 	return (
 		<div className="container pokedex justify-content-center flex-column">
 			<div className="h1 titlePokedex flex-row text-center">Pokédex</div>

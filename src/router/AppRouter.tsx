@@ -6,11 +6,13 @@ import { useAuthStore } from "../hooks/useAuthStore";
 import { useEffect } from "react";
 import { LoadingComponent } from "../components/LoadingComponent";
 import { useCollectionStore } from "../hooks/useCollectionStore";
+import { usePokeStore } from "../hooks/usePokeStore";
 
 export const AppRouter = () => {
 	//const status = useCheckAuth();
 	const { status, checkAuthToken } = useAuthStore();
 	const { startLoadingCollection } = useCollectionStore();
+	const { startLoadingTypes } = usePokeStore();
 
 	useEffect(() => {
 		checkAuthToken();
@@ -21,6 +23,11 @@ export const AppRouter = () => {
 			startLoadingCollection();
 		}
 	}, [status]);
+
+	useEffect(() => {
+		startLoadingTypes();
+	}, []);
+
 
 	if (status === checkingStatus) {
 		return <LoadingComponent />;

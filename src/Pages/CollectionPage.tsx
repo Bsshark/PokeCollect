@@ -1,3 +1,5 @@
+import { CollectionComponent } from "../components/CollectionComponent";
+
 export const CollectionPage = () => {
 
   
@@ -6,6 +8,7 @@ export const CollectionPage = () => {
 		<div className="container pokedex justify-content-center flex-column">
 			<div className="h1 titlePokedex flex-row text-center">Colección</div>
 			<hr />
+			<CollectionComponent/>
 		</div>
 	);
 };

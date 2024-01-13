@@ -68,6 +68,18 @@ export const pokemonNameFix = async (id: number) => {
 	return names.find((item) => item.pokemon_species_id === id.toString());
 };
 
+export const setIdToType = (types: PokemonType[], dbTypes: PokemonType[]) => {
+	let typesWithId: PokemonType[] = [];
+	for (let i = 0; i < types.length; i++) {
+		if (types[i].id && !dbTypes) return;
+		const newId = dbTypes.find((type) => type.name === types[i].name)?.id;
+		if (newId) {
+			typesWithId.push({ ...types[i], id: newId });
+		}
+	}
+	return typesWithId;
+};
+
 export const checkCanPass = (isPassing?: boolean) => {
 	const currentDate = new Date();
 	const tiempoEsperaEnSegs = 5;
@@ -82,16 +94,16 @@ export const checkCanPass = (isPassing?: boolean) => {
 				localStorage.removeItem("dateNextPass");
 				return true;
 			}
-		} else { return false }
+		} else {
+			return false;
+		}
 	}
 
-	if(isPassing) {
+	if (isPassing) {
 		localStorage.setItem(
 			"dateNextPass",
 			JSON.stringify(
-				currentDate.setSeconds(
-					currentDate.getSeconds() + tiempoEsperaEnSegs
-				)
+				currentDate.setSeconds(currentDate.getSeconds() + tiempoEsperaEnSegs)
 			)
 		);
 		return false;
