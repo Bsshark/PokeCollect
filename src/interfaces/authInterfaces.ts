@@ -5,7 +5,7 @@ export interface AuthState {
 }
 
 export interface AuthUser {
-	uid: string | null;
+	uid?: string | null;
 	email?: string | null;
 	displayName?: string | null;
 	photoUrl?: string | null;

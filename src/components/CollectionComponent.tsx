@@ -3,7 +3,7 @@ import { useCollectionStore } from "../hooks/useCollectionStore";
 import { usePokeStore } from "../hooks/usePokeStore";
 import { OrderBy } from "./OrderBy";
 import { PokeCard } from "./PokeCard";
-import { findTypeInLanguage, setIdToType } from "../helpers/pokeHelp";
+import { setIdToType } from "../helpers/pokeHelp";
 import { CollectionItem } from "../interfaces";
 
 export const CollectionComponent = () => {

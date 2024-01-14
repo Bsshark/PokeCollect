@@ -2,7 +2,7 @@ import * as Yup from "yup";
 import { LoginUser, RegisterUser } from "../interfaces/authInterfaces";
 
 const emailErrorMsg = "Ingrese un correo electrónico válido.";
-const nameErrorMsg = "Ingrese un nombre válido.";
+//const nameErrorMsg = "Ingrese un nombre válido.";
 const passwordErrorMsg = "Ingrese una clave válida.";
 const passwordConfirmErrorMsg = "Las contraseñas no coinciden";
 

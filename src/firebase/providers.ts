@@ -22,7 +22,6 @@ export const singInWithGoogle = async() => {
 
     } catch (error:any) {
         
-        const errorCode = error.code;
         const errorMessage = error.message;
     
         return {

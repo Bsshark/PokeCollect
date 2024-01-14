@@ -3,7 +3,6 @@ import { PokeState } from "../interfaces";
 import {
 	onLoadDBTypes,
 	onLoadPokemon,
-	onLoadSpecies,
 	onLoadTypes,
 	onSetPokedexLimits,
 	startLoading,
@@ -158,7 +157,7 @@ export const usePokeStore = () => {
 		}
 	};
 
-	const startLoadingPokemonSpecies = async (id?: string, ids?: string[]) => {
+	/* const startLoadingPokemonSpecies = async (id?: string, ids?: string[]) => {
 		try {
 			if (id) {
 				//By ID
@@ -203,7 +202,7 @@ export const usePokeStore = () => {
 				});
 			}
 		} catch (error) {}
-	};
+	}; */
 
 	return {
 		pokemonShown,

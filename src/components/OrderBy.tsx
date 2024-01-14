@@ -1,5 +1,3 @@
-import { ChangeEvent } from "react";
-
 export interface OrderByProps {
 	values: string[];
 	text?: string;
