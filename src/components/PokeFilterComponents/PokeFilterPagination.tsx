@@ -7,12 +7,14 @@ export interface PokeFilterPaginationProps {
 	isLoading: boolean;
 	search: string;
 	firstLoad: boolean;
+	typeFilter: string;
 }
 
 export const PokeFilterPagination = ({
 	isLoading,
 	search,
 	firstLoad,
+	typeFilter
 }: PokeFilterPaginationProps) => {
 	const { from } = usePokeStore();
 	const [page, setPage] = useState(Math.floor((from + 8) / 9));
@@ -48,6 +50,7 @@ export const PokeFilterPagination = ({
 					firstLoad={firstLoad}
 					setPage={setPage}
 					page={page}
+					typeFilter={typeFilter}
 				></PokeFilterArrowPage>
 				{pagesToShow?pagesToShow.map((pageText) => (
 					<li className={`paginationItem ${search?'fa-disabled':'cursor'} ${page===pageText?'active':''}`} key={pageText}>
@@ -64,6 +67,7 @@ export const PokeFilterPagination = ({
 					firstLoad={firstLoad}
 					setPage={setPage}
 					page={page}
+					typeFilter={typeFilter}
 				></PokeFilterArrowPage>
 			</ul>
 		</nav>

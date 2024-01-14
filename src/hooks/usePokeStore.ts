@@ -35,9 +35,10 @@ export const usePokeStore = () => {
 	const startLoadingPokes = async (
 		query?: string,
 		newLimit?: number,
-		newFrom?: number
+		newFrom?: number,
+		typeFilter?: string
 	) => {
-		let headerConfig = { limit, from };
+		let headerConfig = { limit, from, typeFilter: ""};
 
 		if (newLimit && newFrom) {
 			headerConfig = { ...headerConfig, limit: newLimit, from: newFrom };
@@ -48,6 +49,8 @@ export const usePokeStore = () => {
 				from: Number(localStorage.getItem("from")),
 			};
 		}
+		if(typeFilter && typeFilter !== "Tipo") headerConfig = {...headerConfig, typeFilter: typeFilter.toLowerCase()};
+		console.log(headerConfig);
 
 		dispatch(startLoading());
 		(async () => {
@@ -55,7 +58,8 @@ export const usePokeStore = () => {
 				var pokemonToShow: Pokemon[] = [];
 				var speciesPromises: Promise<any>[] = [];
 				if (query !== "" && query) {
-					pokeApi.get(`/pokemon/name/${query}`).then((result) => {
+					pokeApi.get<Pokemon[]>(`/pokemon/name/${query}`, { headers: headerConfig }).then((result) => {
+						
 						result.data.forEach((pokemon: Pokemon) => {
 							speciesPromises.push(
 								pokeApi.get(`/pokemon/species/${pokemon.id}`)
@@ -85,10 +89,11 @@ export const usePokeStore = () => {
 							dispatch(onLoadPokemon(pokemonToShow));
 						});
 					});
-				} else if (query === "" || !query) {
+				} else if ((query === "" || !query)) {
 					pokeApi
-						.get(`/pokemon/pagination/page`, { headers: headerConfig })
+						.get<Pokemon[]>(`/pokemon/pagination/page`, { headers: headerConfig })
 						.then((result) => {
+							console.log(`headerConfig: ${headerConfig.from} ${headerConfig.typeFilter}`);
 							result.data.forEach((pokemon: Pokemon) => {
 								speciesPromises.push(
 									pokeApi.get(`/pokemon/species/${pokemon.id}`)

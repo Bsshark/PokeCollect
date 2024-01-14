@@ -10,6 +10,7 @@ export const PokeFilterArrowPage = ({
 	firstLoad,
 	setPage,
 	page,
+	typeFilter = ""
 }: PokeFilterArrowPageProps) => {
 	const { startLoadingPokes, limit } = usePokeStore();
 
@@ -32,7 +33,7 @@ export const PokeFilterArrowPage = ({
 		if (!page) return;
 		if (!firstLoad) {
 			const newFrom = ((page*9)-9)===0?1:((page*9)-8);
-			startLoadingPokes(undefined, limit, newFrom);
+			startLoadingPokes(undefined, limit, newFrom, typeFilter);
 		}
 	}, [page]);
 

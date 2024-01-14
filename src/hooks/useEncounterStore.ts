@@ -36,12 +36,13 @@ export const useEncounterStore = () => {
 		}
 		startLoadingPokemonById(randomNumber);
 	};
+	
 
 	const startLoadingPokemonById = async (id: number, next?: boolean) => {
 		try {
+			console.log(`hay en localstorage?: ${"pokemonEncounter" in localStorage}`)
 			if (!("pokemonEncounter" in localStorage) || next) {
-				await pokeApi.get(`/pokemon/${id}`).then((result) => {
-					localStorage.setItem("pokemonEncounter", JSON.stringify(result.data));
+				pokeApi.get(`/pokemon/id/${id}`).then((result) => {
 					dispatch(onLoad(result.data));
 				});
 			} else {
@@ -73,7 +74,7 @@ export const useEncounterStore = () => {
 							currentCollection.push(newItem);
 							console.log({...data, collection_items: currentCollection})
 							startUpdatingCollection({...data, collection_items: currentCollection, user_id: user.uid!});
-
+							
 							startLoadingPokemon(true);
 						})
 

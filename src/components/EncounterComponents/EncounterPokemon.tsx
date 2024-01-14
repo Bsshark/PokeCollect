@@ -1,5 +1,5 @@
 import PokeballIcon from "../../assets/pokeball.png";
-import { Pokemon, Sprites } from "../../interfaces/PokedexInterfaces";
+import { Pokemon } from "../../interfaces/PokedexInterfaces";
 
 import MissingSprite from "../../assets/missingSprite.png";
 import { useEffect, useState } from "react";

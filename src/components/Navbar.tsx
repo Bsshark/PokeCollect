@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import PokedexLogo from "./../assets/pokedex.png";
 import PokeballNav from "./../assets/pokeball-nav.png";
-import CollectionIcon from '../assets/collectionIcon.png';
+import CollectionIcon from "../assets/collectionIcon.png";
 import { useAppSelector } from "../hooks";
 import { AuthState } from "../interfaces";
 import { NavProfileIcon } from "./NavProfileIcon";
@@ -35,7 +35,7 @@ export const Navbar = () => {
 					aria-expanded={!isNavCollapsed ? true : false}
 					aria-label="Toggle navigation"
 					onClick={handleNavCollapse}
-					style={{marginBottom: "0.5em", boxShadow: "0px"}}
+					style={{ marginBottom: "0.5em", boxShadow: "0px" }}
 				>
 					<span className="navbar-toggler-icon"></span>
 				</button>
@@ -46,9 +46,9 @@ export const Navbar = () => {
 					<ul className="navbar-nav mr-auto nav-list-pokemon">
 						<NavPokemonItem
 							isMobile={isMobile}
-							to="pokedex"
-							src={PokedexLogo}
-							alt="Pokédex"
+							to="encounter"
+							src={PokeballNav}
+							alt="Capturar"
 						/>
 						<NavPokemonItem
 							isMobile={isMobile}
@@ -58,13 +58,13 @@ export const Navbar = () => {
 						/>
 						<NavPokemonItem
 							isMobile={isMobile}
-							to="encounter"
-							src={PokeballNav}
-							alt="Capturar"
+							to="pokedex"
+							src={PokedexLogo}
+							alt="Pokédex"
 						/>
 					</ul>
 					<ul className="navbar-nav ms-auto">
-						<li className={`nav-item ${isMobile?'':'profile-item-mobile'}`}>
+						<li className={`nav-item ${isMobile ? "" : "profile-item-mobile"}`}>
 							<NavLink
 								to="/profile"
 								/* className={({ isActive, isPending }) =>

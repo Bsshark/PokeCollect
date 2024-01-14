@@ -20,13 +20,24 @@ export const EncounterComponent = () => {
 		if(isLoading) {
 			clearInterval(intervalCheckCatch!);
 		}
-		intervalCheckCatch = setInterval(() => setCanPass(checkCanPass()), 5000);
+		intervalCheckCatch = setInterval(() => setCanPass(checkCanPass()), 10000);
 	}, [isLoading])
+
+	useEffect(() => {
+		if(isLoading) return;
+		localStorage.setItem("pokemonEncounter", JSON.stringify(pokemon));
+	  }, [isLoading])
 
 	useEffect(() => {
 		if(!("isShiny" in localStorage)) return;
 		setIsShiny(JSON.parse(localStorage.getItem("isShiny")!));
 	}, [])
+
+	useEffect(() => {
+		if(isLoading) return;
+	  console.log(pokemon)
+	}, [isLoading])
+	
 	
 	
 
@@ -36,7 +47,7 @@ export const EncounterComponent = () => {
 	
 	const handleShiny = () => {
 		const shinyRandom = Math.round(Math.random() * (4000 - 1 + 1) + 1);
-		if(shinyRandom < 3000) {
+		if(shinyRandom === 1) {
 			setIsShiny(true);
 		}else {
 			setIsShiny(false);

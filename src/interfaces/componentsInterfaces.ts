@@ -29,4 +29,5 @@ export interface PokeFilterArrowPageProps {
 	firstLoad: boolean;
 	setPage: React.Dispatch<React.SetStateAction<number>>;
 	page: number;
+	typeFilter: string;
 }
