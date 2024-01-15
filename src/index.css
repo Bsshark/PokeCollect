@@ -6,7 +6,7 @@ html,
 body,
 #root,
 #root > div {
-	background-color: #f9dfdd;
+	background-color: #f9e2e2;
 }
 
 body {
@@ -20,11 +20,14 @@ body {
 }
 
 #root .form-container {
-	background-color: #f8ad9d;
+	background-color: #fdafa4c7;
+	-webkit-box-shadow: 10px 13px 21px -1px rgba(0, 0, 0, 0.8);
+	-moz-box-shadow: 10px 13px 21px -1px rgba(0, 0, 0, 0.8);
+	box-shadow: 10px 13px 21px -1px rgba(0, 0, 0, 0.8);
 }
 
 .form-container div {
-	color: #1b1b1b;
+	color: black;
 }
 .form-container a {
 	color: #133d5a;
@@ -109,15 +112,13 @@ body {
 }
 .shuffle-icon:hover {
 	cursor: pointer;
-	background-color: #db8b84 ;
+	background-color: #db8b84;
 	color: white;
 	transform: scale(1.2);
 }
-.shuffle-icon:active{
+.shuffle-icon:active {
 	background-color: #db8b84be;
 }
-
-
 
 .fa-disabled {
 	opacity: 0.6;
